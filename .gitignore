@@ -43,7 +43,7 @@ pids
 *.pid.lock
 
 # Chrome cache and browser data
-C/Users/Windows/AppData/Local/Google/Chrome/
+C/
 **/Cache/
 **/Cache_Data/
 **/BrowserMetrics/
@@ -56,6 +56,57 @@ C/Users/Windows/AppData/Local/Google/Chrome/
 **/Safe Browsing/
 **/extensions_crx_cache/
 **/component_crx_cache/
+**/Code Cache/
+**/Service Worker/
+**/Local Storage/
+**/Session Storage/
+**/WebStorage/
+**/GPUCache/
+**/DawnWebGPUCache/
+**/DawnGraphiteCache/
+**/Shared Dictionary/
+**/Extension Rules/
+**/Extension Scripts/
+**/Extension State/
+**/Web Applications/
+**/Sessions/
+**/Favicons/
+**/Top Sites/
+**/Download Service/
+**/Feature Engagement Tracker/
+**/GCM Store/
+**/Site Characteristics Database/
+**/Sync Data/
+**/chrome_cart_db/
+**/commerce_subscription_db/
+**/discount_infos_db/
+**/discounts_db/
+**/parcel_tracking_db/
+**/shared_proto_db/
+**/optimization_guide_hint_cache_store/
+**/heavy_ad_intervention_opt_out.db*
+**/trusted_vault.pb
+**/passkey_enclave_state
+**/DIPS*
+**/Shortcuts*
+**/Web Data*
+**/Translate Ranker Model
+**/Custom Dictionary.txt
+**/Preferences
+**/Secure Preferences
+**/README
+**/LOCK
+**/LOG*
+**/CURRENT
+**/MANIFEST-*
+**/index*
+**/metadata.json
+**/first_party_sets.db*
+**/ukm_db*
+**/Variations
+**/Last Browser
+**/Last Version
+**/Local State
 
 # Generated files
 generated_*.txt
