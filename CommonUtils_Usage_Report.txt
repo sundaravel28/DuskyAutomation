@@ -1,0 +1,249 @@
+================================================================================
+                    COMMONUTILS METHODS USAGE REPORT
+================================================================================
+
+This document shows which CommonUtils methods are used in each page file:
+- jobdetailsPage.ts
+- jobdescription.ts  
+- jobscorescriteria.ts
+
+================================================================================
+                                JOB DETAILS PAGE
+================================================================================
+
+File: tests/pages/jobdetailsPage.ts
+
+CommonUtils Methods Used:
+------------------------
+
+1. navigateToUrl()
+   - Used in: navigateToTalentQA()
+   - Purpose: Navigate to Talent QA website
+   - URL: https://talent-qa.ideas2it.com/
+
+2. findElementWithFallback()
+   - Used in: clickJobDescription()
+   - Purpose: Find Job Description element with multiple fallback selectors
+   - Selectors: [alt="Job Description"], .bg-gray-30, a[href="/jobs/create-new/null/job-description"], text=Job Description
+
+3. waitForTimeout()
+   - Used in: clickJobDescription(), selectJobTypeFromDropdown(), selectJobTypeWithKeyboard(), AddJob()
+   - Purpose: Wait for specified time periods
+   - Timeouts: 10000ms (after JD click), 1000ms (form load), 2000ms (after job creation)
+
+4. getEnvVar()
+   - Used in: fillJobTitle(), selectDepartment(), fillNumberOfOpenings(), selectMinExperienceFromDropdown(), fillMinExperience(), selectMaxExperienceFromDropdown(), fillMaxExperience(), selectWorkPreferenceFromDropdown(), fillWorkPreference(), fillLocation()
+   - Purpose: Get environment variables with fallback values
+   - Variables: role, department, DEPARTMENT, Openings, minexperience, maxexperience, workpreference, location
+
+5. fillInputWithValidation()
+   - Used in: fillJobTitle(), fillNumberOfOpenings(), fillMinExperience(), fillMaxExperience(), fillWorkPreference(), fillLocation()
+   - Purpose: Fill input fields with validation
+   - Fields: job title, number of openings, experience fields, work preference, location
+
+6. selectFromDropdown()
+   - Used in: selectDepartment(), selectMinExperienceFromDropdown(), selectMaxExperienceFromDropdown(), selectWorkPreferenceFromDropdown()
+   - Purpose: Select values from dropdown menus
+   - Dropdowns: department, min experience, max experience, work preference
+
+7. waitForFormToLoad()
+   - Used in: waitForFormToLoad()
+   - Purpose: Wait for form to load after clicking add job button
+
+================================================================================
+                              JOB DESCRIPTION PAGE
+================================================================================
+
+File: tests/pages/jobdescription.ts
+
+CommonUtils Methods Used:
+------------------------
+
+1. getCurrentUrl()
+   - Used in: writeJDContent(), saveJobDescription()
+   - Purpose: Get current page URL for validation and logging
+   - Usage: Check for null job ID, extract job ID from URL
+
+2. readContentFromEnvFile()
+   - Used in: writeJDContent()
+   - Purpose: Read JD content from jd.env file
+   - File: jd.env
+   - Key: jd_content
+
+3. writeToTextEditor()
+   - Used in: writeJDContent()
+   - Purpose: Write content to text editor with multiple selector fallbacks
+   - Selectors: .tiptap.ProseMirror, [contenteditable="true"], textarea, etc.
+
+4. scrollToBottom()
+   - Used in: scrollToBottom()
+   - Purpose: Scroll to bottom of page
+   - Attempts: 3
+
+5. findElementWithFallback()
+   - Used in: clickJobScoreCriteria()
+   - Purpose: Find Job Score Criteria button with multiple fallback selectors
+   - Selectors: button.shadow-sm.flex.flex-row, button:has-text("Job Score Criteria"), etc.
+
+6. waitForTimeout()
+   - Used in: clickJobScoreCriteria(), saveJobDescription()
+   - Purpose: Wait for operations to complete
+   - Timeouts: 500ms (after scroll), 2000ms (after button click), 3000ms (UUID retry)
+
+7. clickElementWithFallback()
+   - Used in: clickJobScoreCriteria()
+   - Purpose: Click element with fallback handling
+   - Element: Job Score Criteria button
+
+8. clickButtonWithFallback()
+   - Used in: saveJobDescription()
+   - Purpose: Click save button with multiple selector fallbacks
+   - Selectors: button:has-text("Save"), button:has-text("Save Changes"), etc.
+
+9. checkForErrorMessages()
+   - Used in: saveJobDescription()
+   - Purpose: Check for error messages on page after save operation
+
+================================================================================
+                            JOB SCORES CRITERIA PAGE
+================================================================================
+
+File: tests/pages/jobscorescriteria.ts
+
+CommonUtils Methods Used:
+------------------------
+
+1. isPageActive()
+   - Used in: domainSelection(), selectRequiredSkills(), selectPreferredQualifications(), writeJobResponsibilities(), clickSaveAndNext()
+   - Purpose: Check if page is still active before performing operations
+   - Usage: Prevent operations on closed pages
+
+2. parseCommaSeparatedEnvVar()
+   - Used in: domainSelection()
+   - Purpose: Parse comma-separated environment variables
+   - Variable: domain
+   - Default: Healthcare
+
+3. findElementWithFallback()
+   - Used in: domainSelection(), writeJobResponsibilities()
+   - Purpose: Find elements with multiple fallback selectors
+   - Elements: domain dropdown, job responsibilities text area
+
+4. waitForTimeout()
+   - Used in: domainSelection(), selectRequiredSkills(), selectPreferredQualifications(), writeJobResponsibilities(), clickSaveAndNext()
+   - Purpose: Wait for operations to complete
+   - Timeouts: 2000ms (after dropdown open), 500ms (after skill selection), 2000ms (after save)
+
+5. selectCheckboxesByText()
+   - Used in: domainSelection()
+   - Purpose: Select checkboxes by text content
+   - Selector: input[type="checkbox"][class*="mr-3"]
+
+6. closeDropdown()
+   - Used in: domainSelection()
+   - Purpose: Close dropdown after selection
+   - Methods: Escape key, click outside
+
+7. getCurrentUrl()
+   - Used in: domainSelection()
+   - Purpose: Get current URL for navigation validation
+   - Usage: Check if still on job creation page
+
+8. navigateToUrl()
+   - Used in: domainSelection()
+   - Purpose: Navigate back to job creation page if needed
+   - URL: http://localhost:3000/jobs/create-new/null/job-description
+
+9. readContentFromEnvFile()
+   - Used in: writeJobResponsibilities()
+   - Purpose: Read job responsibilities from jr.env file
+   - File: jr.env
+   - Key: job_responsibilities
+
+10. writeToTextEditor()
+    - Used in: writeJobResponsibilities()
+    - Purpose: Write content to text area with multiple selector fallbacks
+    - Selectors: textarea[placeholder*="responsibilities"], textarea, [contenteditable="true"]
+
+11. clickAnywhereInUI()
+    - Used in: clickSaveAndNext()
+    - Purpose: Click anywhere in UI to ensure focus
+    - Position: x: 100, y: 100
+
+12. scrollToBottom()
+    - Used in: clickSaveAndNext()
+    - Purpose: Scroll to bottom of page
+    - Attempts: 5
+
+13. clickButtonWithFallback()
+    - Used in: clickSaveAndNext()
+    - Purpose: Click Save & Next button with multiple selector fallbacks
+    - Selectors: button:has-text("Save & Next"), button.shadow-sm:has-text("Save & Next"), etc.
+
+================================================================================
+                              SUMMARY STATISTICS
+================================================================================
+
+Total CommonUtils Methods: 13
+
+Most Used Methods:
+-----------------
+1. waitForTimeout() - Used in all 3 pages (8 times total)
+2. findElementWithFallback() - Used in all 3 pages (4 times total)
+3. getEnvVar() - Used in jobdetailsPage.ts (8 times)
+4. isPageActive() - Used in jobscorescriteria.ts (5 times)
+5. fillInputWithValidation() - Used in jobdetailsPage.ts (6 times)
+6. selectFromDropdown() - Used in jobdetailsPage.ts (4 times)
+
+Page Usage Distribution:
+-----------------------
+- jobdetailsPage.ts: 7 different methods
+- jobdescription.ts: 9 different methods  
+- jobscorescriteria.ts: 13 different methods
+
+Method Categories:
+-----------------
+- Navigation: navigateToUrl(), getCurrentUrl()
+- Element Finding: findElementWithFallback()
+- Input Operations: fillInputWithValidation(), selectFromDropdown(), writeToTextEditor()
+- File Operations: readContentFromEnvFile()
+- UI Interactions: clickElementWithFallback(), clickButtonWithFallback(), clickAnywhereInUI()
+- Page State: isPageActive(), waitForTimeout(), scrollToBottom()
+- Data Processing: parseCommaSeparatedEnvVar(), getEnvVar()
+- Utility: closeDropdown(), checkForErrorMessages(), waitForFormToLoad()
+
+================================================================================
+                              ARCHITECTURE UPDATE
+================================================================================
+
+Recent Updates: 
+1. All locators moved to Selectors.ts file
+2. All timeout values moved to CommonUtils.ts file
+
+Changes Made:
+-------------
+1. Removed all private readonly locator properties from page files
+2. Added locator selectors to JOB_DETAILS_PAGE in Selectors.ts
+3. Updated page methods to use selectors directly from Selectors.ts
+4. Added TIMEOUTS constants to CommonUtils class as static readonly
+5. Updated all page files to use CommonUtils.TIMEOUTS instead of importing from Selectors
+6. Removed TIMEOUTS section from Selectors.ts
+7. Maintained clean separation of concerns:
+   - Selectors.ts: All selectors, locators, text constants, and DOM values
+   - CommonUtils.ts: Common methods AND timeout constants
+   - Page files: Business logic only
+   - config.env: Dynamic values only
+
+Benefits:
+---------
+- Centralized selector management in Selectors.ts
+- Centralized timeout management in CommonUtils.ts
+- Easier maintenance and updates
+- Cleaner page object files
+- Better separation of concerns
+- Reduced code duplication
+- Timeout constants accessible via CommonUtils.TIMEOUTS
+
+================================================================================
+                                END OF REPORT
+================================================================================

@@ -1,0 +1,32 @@
+{
+  "name": "dusky",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test:all": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/run-tests.ps1",
+    "bdd": "cucumber-js tests/features/**/*.feature --require-module ts-node/register --require tests/steps/**/*.ts",
+    "bdd:addjob": "cucumber-js tests/features/AddJob.feature --require-module ts-node/register --require tests/steps/**/*.ts",
+    "bdd:schedulejob": "cucumber-js tests/features/schedulejob.feature --require-module ts-node/register --require tests/steps/**/*.ts",
+    "pdf:edit": "ts-node tests/pages/pdfeditor.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "A comprehensive Playwright-based test automation framework for web application testing with a clean, maintainable architecture.",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.5.2",
+    "@types/pdf-parse": "^1.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "libreoffice-convert": "^1.7.0",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^1.1.1"
+  },
+  "directories": {
+    "test": "tests"
+  }
+}
