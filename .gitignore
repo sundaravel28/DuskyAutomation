@@ -96,7 +96,11 @@ C/
 **/Secure Preferences
 **/README
 **/LOCK
-**/LOG*
+**/LOG
+**/LOG[0-9]*
+**/LOG.*
+!**/*.ts
+!**/*.js
 **/CURRENT
 **/MANIFEST-*
 **/index*
