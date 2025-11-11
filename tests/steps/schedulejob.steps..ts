@@ -5,13 +5,13 @@ import jobdescription from '../pages/jobdescription';
 import jobscorescriteria from '../pages/jobscorescriteria';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import { editPdf } from '../pages/pdfeditor';
+import { editPdf, createResumePdf } from '../pages/pdfeditor';
 import { SCHEDULE_INTERVIEW_PAGE } from '../pages/Selectors';
 import { CommonUtils } from '../pages/CommonUtils';
 import * as fs from 'fs';
 
-dotenv.config({ path: path.resolve(process.cwd(), 'config.env') });
-dotenv.config({ path: path.resolve(process.cwd(), 'validation.env') });
+dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), quiet: true });
+dotenv.config({ path: path.resolve(process.cwd(), 'validation.env'), quiet: true });
 
 setDefaultTimeout(120 * 1000);
 
@@ -24,8 +24,8 @@ let utils: CommonUtils;
 
 Before({ tags: '@schedule' }, async function () {
   // Resolve Chrome user data and profile directories. Defaults target the Sundaravel profile.
-  const chromeBaseDir = process.env.CHROME_USER_DATA_DIR || 'C:\\Users\\sundaravel.v\\Documents\\Dusky\\C\\Users\\Windows\\AppData\\Local\\Google\\Chrome\\User Data';
-  const chromeProfileDir = process.env.CHROME_PROFILE_DIR || 'Profile 6'; // Sundaravel profile directory
+  const chromeBaseDir = process.env.CHROME_USER_DATA_DIR || 'C\\\\Users\\\\Windows\\\\AppData\\\\Local\\\\Google\\\\Chrome\\\\User Data';
+  const chromeProfileDir = process.env.CHROME_PROFILE_DIR || 'Default'; // adjust if Sundaravel maps to a different folder
   const profilePath = path.join(chromeBaseDir, chromeProfileDir);
 
   context = await chromium.launchPersistentContext(profilePath, {
@@ -51,6 +51,10 @@ After({ tags: '@schedule' }, async function () {
   }
 });
 
+Given('I launch Chrome with profile {string}', async function (profileName: string) {
+  // Profile is already applied in Before hook; do nothing to avoid closing context mid-scenario
+});
+
 Given('I launch Chrome with schedule profile {string}', async function (profileName: string) {
   // Profile is already applied in Before hook; do nothing to avoid closing context mid-scenario
 });
@@ -63,7 +67,8 @@ When('I navigate to the Talent QA site for schedule', async function () {
 });  
 
 Given('Update PDF', async function () {
-  await editPdf();
+  // Create a new PDF resume from scratch with random name, email, and phone
+  await createResumePdf();
 });
 
 // Validate job title heading on Schedule Interview page using centralized selector
@@ -363,7 +368,7 @@ When('Schedule Interview Button', async function () {
 
 When('Search and select panel member', async function () {
   // Reload env to ensure latest values from config.env
-  try { dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), override: true }); } catch {}
+  try { dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), override: true, quiet: true }); } catch {}
   let panelValue = (process.env.PanelMember || process.env.PANEL_MEMBER || '').trim();
 
   if (!panelValue) {
@@ -675,6 +680,119 @@ When('Select Template Button', async function () {
   await btn.waitFor({ state: 'visible', timeout: 20000 });
   await btn.click();
   console.log('✓ Clicked Template Button');
+});
+
+
+When('select template type', async function () {
+  // Find the Template Type dropdown - try multiple selectors
+  const dropdownSelectors = [
+    "//*[contains(text(), 'Template Type')]/following-sibling::*//*[contains(text(), 'All Types')]",
+    "//*[contains(text(), 'Template Type')]/..//*[contains(text(), 'All Types')]",
+    "//*[text()='All Types']",
+    "//*[contains(@placeholder, 'Template Type')]",
+    "//*[contains(@aria-label, 'Template Type')]",
+    (SCHEDULE_INTERVIEW_PAGE as any).SELECTTEMPLATETYPE
+  ].filter(Boolean) as string[];
+  
+  let dropdown = null;
+  for (const selector of dropdownSelectors) {
+    try {
+      const locator = selector.startsWith('//') 
+        ? page.locator(`xpath=${selector}`).first()
+        : page.locator(selector).first();
+      await locator.waitFor({ state: 'visible', timeout: 3000 });
+      dropdown = locator;
+      console.log(`✓ Found Template Type dropdown with selector: ${selector}`);
+      break;
+    } catch (e) {
+      continue;
+    }
+  }
+  
+  if (!dropdown) {
+    throw new Error('Template Type dropdown not found');
+  }
+  
+  // Click the dropdown to open it
+  await dropdown.click();
+  console.log('✓ Clicked Template Type dropdown');
+  
+  // Wait for dropdown options to appear
+  await utils.waitForTimeout(1000);
+  
+  // Select "outreach" from the dropdown options
+  const optionValue = 'outreach';
+  let selected = false;
+  
+  // Strategy 1: Try exact text match
+  try {
+    const option = page.locator(`text=${optionValue}`).first();
+    await option.waitFor({ state: 'visible', timeout: 3000 });
+    await option.click();
+    console.log(`✓ Selected template type: ${optionValue}`);
+    selected = true;
+  } catch (e) {
+    // Continue to next strategy
+  }
+  
+  // Strategy 2: Try role="option" with text
+  if (!selected) {
+    try {
+      const option = page.locator(`[role="option"]:has-text("${optionValue}")`).first();
+      await option.waitFor({ state: 'visible', timeout: 3000 });
+      await option.click();
+      console.log(`✓ Selected template type (role option): ${optionValue}`);
+      selected = true;
+    } catch (e) {
+      // Continue to next strategy
+    }
+  }
+  
+  // Strategy 3: Try getByText with case-insensitive
+  if (!selected) {
+    try {
+      const option = page.getByText(optionValue, { exact: false }).first();
+      await option.waitFor({ state: 'visible', timeout: 3000 });
+      await option.click();
+      console.log(`✓ Selected template type (case-insensitive): ${optionValue}`);
+      selected = true;
+    } catch (e) {
+      // Continue to next strategy
+    }
+  }
+  
+  // Strategy 4: Try XPath with contains
+  if (!selected) {
+    try {
+      const option = page.locator(`xpath=//*[contains(text(), '${optionValue}')]`).first();
+      await option.waitFor({ state: 'visible', timeout: 3000 });
+      await option.click();
+      console.log(`✓ Selected template type (XPath contains): ${optionValue}`);
+      selected = true;
+    } catch (e) {
+      // Continue to next strategy
+    }
+  }
+  
+  // Strategy 5: Try li or div elements
+  if (!selected) {
+    try {
+      const option = page.locator(`li:has-text("${optionValue}"), div:has-text("${optionValue}")`).first();
+      await option.waitFor({ state: 'visible', timeout: 3000 });
+      await option.click();
+      console.log(`✓ Selected template type (li/div): ${optionValue}`);
+      selected = true;
+    } catch (e) {
+      // Final fallback
+    }
+  }
+  
+  if (!selected) {
+    throw new Error(`Could not select template type "${optionValue}" from dropdown`);
+  }
+  
+  // Wait a bit for selection to register
+  await utils.waitForTimeout(500);
 });
 
 When('Select Disqualify Candidate Button', async function () {

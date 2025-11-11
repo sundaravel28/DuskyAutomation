@@ -9,8 +9,14 @@ import {
   WARNING_MESSAGES,
   DROPDOWN_CONTROLS
 } from './Selectors';
-import * as dotenv from 'dotenv';
-dotenv.config(); // Load env variables
+import dotenv from 'dotenv';
+import * as path from 'path';
+
+// Load default .env and project-specific config.env
+dotenv.config({ quiet: true });
+try {
+  dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), quiet: true });
+} catch (_) {}
 
 export default class jobdetailsPage extends BasePage {
   private commonUtils: CommonUtils;
@@ -233,6 +239,37 @@ export default class jobdetailsPage extends BasePage {
     await this.commonUtils.fillInputWithValidation(JOB_DETAILS_PAGE.LOCATION_INPUT, location, 'location');
   }
 
+  async fillEndDate() {
+    try {
+      // First, uncheck the "No end date (Ongoing)" checkbox if it's checked
+      for (const checkboxSelector of JOB_DETAILS_PAGE.NO_END_DATE_CHECKBOX) {
+        try {
+          const checkbox = this.page.locator(checkboxSelector).first();
+          const isVisible = await checkbox.isVisible({ timeout: 2000 }).catch(() => false);
+          if (isVisible) {
+            const isChecked = await checkbox.isChecked().catch(() => false);
+            if (isChecked) {
+              await checkbox.uncheck();
+              console.log('✓ Unchecked "No end date (Ongoing)" checkbox');
+              await this.commonUtils.waitForTimeout(300);
+            }
+            break;
+          }
+        } catch (e) {
+          // Try next selector
+          continue;
+        }
+      }
+      
+      // Now fill the end date
+      const endDate = await this.commonUtils.getFutureDate();
+      await this.commonUtils.fillInputWithValidation(JOB_DETAILS_PAGE.END_DATE, endDate, 'end date');
+    } catch (error) {
+      console.error('❌ Error filling end date:', error);
+      throw error;
+    }
+  }
+
   /**
    * Select job type from dropdown
    */
@@ -304,6 +341,8 @@ export default class jobdetailsPage extends BasePage {
     await this.commonUtils.waitForFormToLoad();
   }
 
+
+
   /**
    * Wait until the Job Details screen has rendered all key elements
    */
@@ -363,6 +402,7 @@ export default class jobdetailsPage extends BasePage {
     await this.selectMinExperienceFromDropdown(minExperience?.toString());
     await this.selectMaxExperienceFromDropdown(maxExperience?.toString());
     await this.selectWorkPreferenceFromDropdown(workPreference);
+    await this.fillEndDate();
     await this.fillLocation(location);
     
     // Try the regular method first, fallback to keyboard method

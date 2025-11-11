@@ -1,0 +1,6 @@
+npx playwright codegen --channel=chrome --user-data-dir="C:\Users\sundaravel.v\Documents\All Flow - Dusky\C\Users\Windows\AppData\Local\Google\Chrome\User Data\Profile 1" https://talent-qa.ideas2it.com/      
+
+git status,
+git add,
+git commit
+git push origin main

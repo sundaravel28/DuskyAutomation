@@ -11,7 +11,13 @@ import {
 } from './Selectors';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
+
+// Load default .env and project-specific config.env
+dotenv.config({ quiet: true });
+try {
+  dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), quiet: true });
+} catch (_) {}
 
 export default class jobdescription extends BasePage {
   private commonUtils: CommonUtils;

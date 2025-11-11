@@ -6,9 +6,10 @@ import jobscorescriteria from '../pages/jobscorescriteria';
 import { CommonUtils } from '../pages/CommonUtils';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import * as fs from 'fs';
 
-dotenv.config({ path: path.resolve(process.cwd(), 'config.env') });
-dotenv.config({ path: path.resolve(process.cwd(), 'validation.env') });
+dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), quiet: true });
+dotenv.config({ path: path.resolve(process.cwd(), 'validation.env'), quiet: true });
 
 setDefaultTimeout(120 * 1000);
 
@@ -19,7 +20,33 @@ let jobDescPage: jobdescription;
 let jobScorePage: jobscorescriteria;
 let utils: CommonUtils;
 
-Before({ tags: '@addjob' }, async function () {
+Before({ tags: '@addnewjob' }, async function () {
+  // Generate and update dynamic role in config.env
+  const dynamicRole = CommonUtils.generateRandomRole();
+  const envPath = path.resolve(process.cwd(), 'config.env');
+  try {
+    let content = fs.existsSync(envPath)
+      ? fs.readFileSync(envPath, 'utf8')
+      : '';
+    
+    // Update or add role in config.env
+    const roleRegex = /^role=.*$/m;
+    if (roleRegex.test(content)) {
+      content = content.replace(roleRegex, `role=${dynamicRole}`);
+    } else {
+      if (content.length && !content.endsWith('\n')) content += '\n';
+      content += `role=${dynamicRole}\n`;
+    }
+    
+    fs.writeFileSync(envPath, content);
+    console.log(`✓ Generated and updated dynamic role in config.env: ${dynamicRole}`);
+    
+    // Reload env to ensure latest values
+    dotenv.config({ path: envPath, override: true, quiet: true });
+  } catch (e) {
+    console.warn('⚠️ Could not update role in config.env:', e);
+  }
+  
   // Resolve Chrome user data and profile directories. Defaults target the Sundaravel profile.
   const chromeBaseDir = process.env.CHROME_USER_DATA_DIR || 'C\\\\Users\\\\Windows\\\\AppData\\\\Local\\\\Google\\\\Chrome\\\\User Data';
   const chromeProfileDir = process.env.CHROME_PROFILE_DIR || 'Default'; // adjust if Sundaravel maps to a different folder
@@ -48,7 +75,7 @@ After({ tags: '@addjob' }, async function () {
   }
 });
 
-Given('I launch Chrome with profile {string}', async function (profileName: string) {
+Given('I launch Chrome with profiles {string}', async function (profileName: string) {
   // Profile is already applied in Before hook; do nothing to avoid closing context mid-scenario
 });
 When('I navigate to the Talent QA site', async function () {

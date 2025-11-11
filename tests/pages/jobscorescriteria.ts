@@ -12,10 +12,15 @@ import {
   DROPDOWN_OPTIONS,
   REGEX_PATTERNS,
 } from './Selectors';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
-dotenv.config();
+
+// Load default .env and project-specific config.env
+dotenv.config({ quiet: true });
+try {
+  dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), quiet: true });
+} catch (_) {}
 
 export default class jobscorescriteria extends BasePage {
   private commonUtils: CommonUtils;

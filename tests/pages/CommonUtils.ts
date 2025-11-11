@@ -1,13 +1,13 @@
 import { Page, BrowserContext, Locator } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import { DROPDOWN_OPTIONS, DROPDOWN_MENUS, DROPDOWN_CONTROLS, JOB_DESCRIPTION_EDITOR } from './Selectors';
 
 // Load default .env and project-specific config.env
-dotenv.config();
+dotenv.config({ quiet: true });
 try {
-  dotenv.config({ path: path.resolve(process.cwd(), 'config.env') });
+  dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), quiet: true });
 } catch (_) {}
 
 export class CommonUtils {
@@ -46,7 +46,7 @@ export class CommonUtils {
   async uploadFileViaPicker(triggerSelector: string, timeoutMs: number = 30000): Promise<void> {
     try {
       // Reload latest env values from config.env (PDF editor may have just updated it)
-      try { dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), override: true }); } catch (_) {}
+      try { dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), override: true, quiet: true }); } catch (_) {}
       const uploadDir = process.env.UPLOAD_DIR || process.cwd();
       const uploadFile = process.env.UPLOAD_FILE || '';
       if (!uploadFile) {
@@ -77,7 +77,7 @@ export class CommonUtils {
   async uploadFileToInput(fileInputSelector: string): Promise<void> {
     try {
       // Reload latest env values from config.env (PDF editor may have just updated it)
-      try { dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), override: true }); } catch (_) {}
+      try { dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), override: true, quiet: true }); } catch (_) {}
       const uploadDir = process.env.UPLOAD_DIR || process.cwd();
       const uploadFile = process.env.UPLOAD_FILE || '';
       if (!uploadFile) {
@@ -122,6 +122,56 @@ export class CommonUtils {
 
   static generateRandomPhone(): string {
     return "9" + Math.floor(100000000 + Math.random() * 900000000);
+  }
+
+  /**
+   * Generate a random job role that is relevant and professional
+   */
+  static generateRandomRole(): string {
+    const jobTitles = [
+      "Software Engineer",
+      "Senior Software Engineer",
+      "Full Stack Developer",
+      "Backend Developer",
+      "Frontend Developer",
+      "DevOps Engineer",
+      "QA Engineer",
+      "Test Automation Engineer",
+      "Technical Program Analyst",
+      "Product Manager",
+      "Senior Product Manager",
+      "Business Analyst",
+      "Data Analyst",
+      "Data Engineer",
+      "Cloud Engineer",
+      "Security Engineer",
+      "Mobile App Developer",
+      "UI/UX Designer",
+      "Technical Lead",
+      "Scrum Master",
+      "Project Manager",
+      "Solution Architect",
+      "Machine Learning Engineer",
+      "AI Engineer",
+      "Blockchain Developer",
+      "React Developer",
+      "Angular Developer",
+      "Node.js Developer",
+      "Python Developer",
+      "Java Developer",
+      "Salesforce Developer",
+      "ServiceNow Developer",
+      "Azure Developer",
+      "AWS Cloud Architect",
+      "Kubernetes Engineer",
+      "Site Reliability Engineer",
+      "Database Administrator",
+      "System Administrator",
+      "Network Engineer",
+      "Cybersecurity Analyst"
+    ];
+    
+    return jobTitles[Math.floor(Math.random() * jobTitles.length)];
   }
 
   /**
@@ -345,6 +395,23 @@ export class CommonUtils {
   async getTitle(): Promise<string> {
     return await this.page.title();
   }
+
+  /**
+   * Get a future date formatted as YYYY-MM-DD (for HTML5 date inputs)
+   * @param daysToAdd Number of days to add to today's date (default: 10)
+   * @returns Formatted date string in YYYY-MM-DD format
+   */
+  async getFutureDate(daysToAdd: number = 10): Promise<string> {
+    const today = new Date();
+    today.setDate(today.getDate() + daysToAdd);
+  
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}`;
+  }
+  
 
   /**
    * Scroll to bottom of the page with multiple attempts

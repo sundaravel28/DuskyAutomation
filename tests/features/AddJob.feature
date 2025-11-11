@@ -1,8 +1,8 @@
-@addjob
+@addnewjob
 Feature: Add job and complete job description and scoring criteria
 
   Background:
-    Given I launch Chrome with profile "Sundaravel"
+    Given I launch Chrome with profiles "Sundaravel"
 
   Scenario: Create a job and finish JD and scoring criteria using env values
     When I navigate to the Talent QA site

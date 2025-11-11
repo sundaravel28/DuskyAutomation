@@ -127,6 +127,17 @@ export const JOB_DETAILS_PAGE = {
     '[data-testid="max-experience-dropdown"]',
     'select[name="maxExperience"]'
   ],
+
+  END_DATE:'//*[@id="endDate"]',
+  NO_END_DATE_CHECKBOX: [
+    '//label[contains(text(), "No end date")]//input[@type="checkbox"]',
+    '//label[contains(text(), "Ongoing")]//input[@type="checkbox"]',
+    'label:has-text("No end date") input[type="checkbox"]',
+    'label:has-text("Ongoing") input[type="checkbox"]',
+    '//input[@type="checkbox"][following-sibling::text()[contains(., "No end date")]]',
+    '//input[@type="checkbox"][following-sibling::text()[contains(., "Ongoing")]]',
+    '//*[@id="endDate"]/following-sibling::*//input[@type="checkbox"]',
+  ],
   
   WORK_PREFERENCE_DROPDOWN_FALLBACK: [
     '.custom-react-select__control:nth-child(4)',
@@ -559,10 +570,11 @@ export const SCHEDULE_INTERVIEW_PAGE = {
   UPDATEEVENTBUTTON: "//button[text()='Update Event']",
   CANCELBUTTON: "//button[text()='Cancel']",
   DISQUALIFYBUTTON: "//*[@data-tooltip-id='disqualify']",
-  SELECTREASONTODISQUALIFY:"//*[text()='Select a reason for rejecting this candidate']",
+  SELECTREASONTODISQUALIFY:"//*[text()='Qualifications']",
   CHANGETEMPLATEBUTTON:"//button[text()='Change Template']",
-  SELECTDIFERRENTTEMPLATE:"//*[text()='Outreach_Request']",
+  SELECTDIFERRENTTEMPLATE:"//*[text()='Feedback Reminder']",
   SELEECTTEMPLATEBUTTON:"//*[text()='Select Template']",
+  SELECTTEMPLATETYPE:"//*[text()='Select Template']",
   SELECTDISQUALIFYBUTTON:"(//*[text()='Disqualify candidate'])[2]",
   DISQUALIFYCONFIRMBUTTON:"//*[text()='Confirm']"
 } as const;

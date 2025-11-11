@@ -123,13 +123,12 @@ Feature: Add one profile in the Jobs
     And I stop the script here for schedule
     And Select Change Template Button
     And I stop the script here for schedule
-    And Select Different Template Button
+    And select template type
     And I stop the script here for schedule
     And Select Template Button
     And I stop the script here for schedule
     And Select Disqualify Candidate Button
     And I stop the script here for schedule
     And Click confirm disqualify
-    And I stop the script here for schedule Infinite
-
+    And I stop the script here for schedule
     
