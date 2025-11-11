@@ -8,6 +8,14 @@ pipeline {
             }
         }
 
+         stage('Copy Env File') {
+            steps {
+                         // Copy the .env file from your local folder to workspace
+                bat 'copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\.env" ".env"'
+            }
+        }
+
+
         stage('Install Dependencies') {
             steps {
                 bat 'npm ci'
