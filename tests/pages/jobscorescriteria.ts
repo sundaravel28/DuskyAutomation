@@ -257,21 +257,68 @@ export default class jobscorescriteria extends BasePage {
       const jobId = jobIdMatch ? jobIdMatch[1] : null;
       console.log('✓ Job ID from URL:', jobId);
   
-      // Read job responsibilities content from jr.txt file
+      // Read job responsibilities content from jr.env or jr.txt file
       let jrContent: string = '';
       try {
-        jrContent = await this.commonUtils.readContentFromEnvFile('jr.txt', 'job_responsibilities');
-      } catch (e) {
-        // Fallback: use entire jr.txt contents (plain text format)
-        const fullPath = path.join(process.cwd(), 'jr.txt');
-        if (!fs.existsSync(fullPath)) {
-          throw e; // original error if file truly missing
+        // Try jr.env first (preferred format - file exists)
+        try {
+          jrContent = await this.commonUtils.readContentFromEnvFile('jr.env', 'job_responsibilities');
+          console.log('✓ Read job responsibilities from jr.env');
+        } catch (e1) {
+          // Fallback to jr.txt with key
+          try {
+            jrContent = await this.commonUtils.readContentFromEnvFile('jr.txt', 'job_responsibilities');
+            console.log('✓ Read job responsibilities from jr.txt');
+          } catch (e2) {
+            // Final fallback: use entire jr.env or jr.txt contents (plain text format)
+            const jrTxtPath = path.join(process.cwd(), 'jr.txt');
+            const jrEnvPath = path.join(process.cwd(), 'jr.env');
+            
+            if (fs.existsSync(jrEnvPath)) {
+              // Read entire jr.env file content
+              const envContent = fs.readFileSync(jrEnvPath, 'utf8');
+              // Extract content after job_responsibilities= or use entire file
+              const lines = envContent.split(/\r?\n/);
+              const contentLines: string[] = [];
+              let foundStart = false;
+              
+              for (const line of lines) {
+                if (line.startsWith('job_responsibilities=')) {
+                  const firstLineContent = line.substring('job_responsibilities='.length);
+                  if (firstLineContent.trim()) {
+                    contentLines.push(firstLineContent);
+                  }
+                  foundStart = true;
+                } else if (foundStart) {
+                  contentLines.push(line);
+                }
+              }
+              
+              jrContent = contentLines.length > 0 
+                ? contentLines.join('\n').replace(/\r/g, '')
+                : envContent.replace(/\r/g, '');
+              console.log('✓ Fallback: using jr.env content');
+            } else if (fs.existsSync(jrTxtPath)) {
+              jrContent = fs.readFileSync(jrTxtPath, 'utf8').replace(/\r/g, '');
+              console.log('✓ Fallback: using full jr.txt content');
+            } else {
+              // File doesn't exist - provide helpful error
+              throw new Error(
+                `Job responsibilities file not found. Please create either:\n` +
+                `  - jr.env with 'job_responsibilities=...' key\n` +
+                `  - jr.txt file with job responsibilities content\n` +
+                `  Expected location: ${process.cwd()}`
+              );
+            }
+            
+            if (!jrContent.trim()) {
+              throw new Error('Job responsibilities file exists but is empty');
+            }
+          }
         }
-        jrContent = fs.readFileSync(fullPath, 'utf8').replace(/\r/g, '');
-        if (!jrContent.trim()) {
-          throw e; // keep previous error context if file is empty
-        }
-        console.log('✓ Fallback: using full jr.txt content');
+      } catch (error) {
+        console.error('❌ Error reading job responsibilities:', error);
+        throw error;
       }
   
       // Write content to the job responsibilities textarea(s)
