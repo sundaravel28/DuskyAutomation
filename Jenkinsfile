@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/sundaravel28/DuskyAutomation.git'
+                git branch: 'master', url: 'https://github.com/sundaravel28/DuskyAutomation.git'
             }
         }
 
@@ -15,43 +15,28 @@ pipeline {
             }
         }
 
-        stage('Run AddJob Feature') {
+        stage('Run SuperAdmin Test') {
             steps {
-                bat 'npm run bdd:addjob'
+                bat 'npx playwright test tests/superadmin.spec.ts'
             }
         }
 
-        stage('Run ScheduleJob Feature') {
+        stage('Run Recruiter Test') {
             steps {
-                bat 'npm run bdd:schedulejob'
+                bat 'npx playwright test tests/recruiter.spec.ts'
             }
         }
 
-        stage('Run AddJob & ScheduleJob Combined Feature') {
+        stage('Run Hiring Manager Test') {
             steps {
-                bat 'npm run bdd:addjob-schedulejob'
+                bat 'npx playwright test tests/hiringmanager.spec.ts'
             }
         }
-        
-        // Alternative: Uncomment below to run all features in one stage instead of individually
-        // stage('Run All Cucumber Tests') {
-        //     steps {
-        //         bat 'npm run bdd'
-        //     }
-        // }
-    }
 
-    post {
-        always {
-            // Archive test results if you have cucumber reports
-            archiveArtifacts artifacts: '**/*.json', allowEmptyArchive: true
-            archiveArtifacts artifacts: '**/*.html', allowEmptyArchive: true
-        }
-        success {
-            echo 'All Cucumber tests passed successfully!'
-        }
-        failure {
-            echo 'Some Cucumber tests failed. Check the logs for details.'
+         stage('Run Interviewer Test') {
+            steps {
+                bat 'npx playwright test tests/interviewer.spec.ts'
+            }
         }
     }
 }
