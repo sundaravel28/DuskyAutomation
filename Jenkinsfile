@@ -7,14 +7,17 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/sundaravel28/DuskyAutomation.git'
             }
         }
-        
-         stage('Copy Env File') {
+
+        stage('Copy All ENV Files') {
             steps {
-                         // Copy the .env file from your local folder to workspace
-                bat 'copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\.env" ".env"'
+                // Copy all .env files from local folder to Jenkins workspace
+                bat '''
+                echo Copying all .env files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.env" "%WORKSPACE%\\" /Y
+                echo Copy completed successfully.
+                '''
             }
         }
-
 
         stage('Install Dependencies') {
             steps {
