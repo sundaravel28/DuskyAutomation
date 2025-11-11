@@ -15,28 +15,43 @@ pipeline {
             }
         }
 
-        stage('Run SuperAdmin Test') {
+        stage('Run AddJob Feature') {
             steps {
-                bat 'npx playwright test tests/superadmin.spec.ts'
+                bat 'npm run bdd:addjob'
             }
         }
 
-        stage('Run Recruiter Test') {
+        stage('Run ScheduleJob Feature') {
             steps {
-                bat 'npx playwright test tests/recruiter.spec.ts'
+                bat 'npm run bdd:schedulejob'
             }
         }
 
-        stage('Run Hiring Manager Test') {
+        stage('Run AddJob & ScheduleJob Combined Feature') {
             steps {
-                bat 'npx playwright test tests/hiringmanager.spec.ts'
+                bat 'npm run bdd:addjob-schedulejob'
             }
         }
+        
+        // Alternative: Uncomment below to run all features in one stage instead of individually
+        // stage('Run All Cucumber Tests') {
+        //     steps {
+        //         bat 'npm run bdd'
+        //     }
+        // }
+    }
 
-         stage('Run Interviewer Test') {
-            steps {
-                bat 'npx playwright test tests/interviewer.spec.ts'
-            }
+    post {
+        always {
+            // Archive test results if you have cucumber reports
+            archiveArtifacts artifacts: '**/*.json', allowEmptyArchive: true
+            archiveArtifacts artifacts: '**/*.html', allowEmptyArchive: true
+        }
+        success {
+            echo 'All Cucumber tests passed successfully!'
+        }
+        failure {
+            echo 'Some Cucumber tests failed. Check the logs for details.'
         }
     }
 }
