@@ -4,7 +4,7 @@ Feature: Add one profile in the Jobs
   Background:
     Given I launch Chrome with schedule profile "Sundaravel"
 
-  @Addfeedbackform
+  @Addthefeedbackform
   Scenario: Add Feedback Form 
     When I navigate to the Talent QA site for schedule
     And Search Role to Schedule Interview
@@ -94,6 +94,8 @@ Feature: Add one profile in the Jobs
     And Click confirm
     And I stop the script here for schedule
     And Schedule Interview Button
+    And Select Interview Type Online
+    And Click update event
     And I stop the script here for schedule Infinite
 
 

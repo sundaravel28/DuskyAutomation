@@ -15,30 +15,41 @@ pipeline {
             }
         }
 
-        stage('Run AddJob Feature') {
+        stage('Run @addnewjob Tests') {
             steps {
-                bat 'npm run bdd:addjob'
+                bat 'npx cucumber-js --tags "@addnewjob" --require-module ts-node/register --require tests/steps/**/*.ts'
             }
         }
 
-        stage('Run ScheduleJob Feature') {
+        stage('Run @Addthefeedbackform Tests') {
             steps {
-                bat 'npm run bdd:schedulejob'
+                bat 'npx cucumber-js --tags "@Addthefeedbackform" --require-module ts-node/register --require tests/steps/**/*.ts'
             }
         }
 
-        stage('Run AddJob & ScheduleJob Combined Feature') {
+        stage('Run @OnlineInterviewSchedule Tests') {
             steps {
-                bat 'npm run bdd:addjob-schedulejob'
+                bat 'npx cucumber-js --tags "@OnlineInterviewSchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
             }
         }
-        
-        // Alternative: Uncomment below to run all features in one stage instead of individually
-        // stage('Run All Cucumber Tests') {
-        //     steps {
-        //         bat 'npm run bdd'
-        //     }
-        // }
+
+        stage('Run @OfflineInterviewSchedule Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@OfflineInterviewSchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
+            }
+        }
+
+        stage('Run @updateInterviewSchedule Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@updateInterviewSchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
+            }
+        }
+
+        stage('Run @disqualifySchedule Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@disqualifySchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
+            }
+        }
     }
 
     post {

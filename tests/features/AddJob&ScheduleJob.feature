@@ -54,3 +54,10 @@ Feature: Add job and complete Schedule job with Update flow
     And I stop the script here for schedule
     And Click confirm disqualify
     And I stop the script here for schedule
+
+
+   @schedule @logout
+     Scenario: To logout the profile
+    When I navigate to the Talent QA site for schedule
+    And searchRoleToLogout
+    And clickLogout

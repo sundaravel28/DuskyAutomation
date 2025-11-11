@@ -3,6 +3,7 @@ import { chromium, BrowserContext, Page, expect } from '@playwright/test';
 import jobdetailsPage from '../pages/jobdetailsPage';
 import jobdescription from '../pages/jobdescription';
 import jobscorescriteria from '../pages/jobscorescriteria';
+import logoutPage from '../pages/logout';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import { editPdf, createResumePdf } from '../pages/pdfeditor';
@@ -20,6 +21,7 @@ let page: Page;
 let talentPage: jobdetailsPage;
 let jobDescPage: jobdescription;
 let jobScorePage: jobscorescriteria;
+let logout: logoutPage;
 let utils: CommonUtils;
 
 Before({ tags: '@schedule' }, async function () {
@@ -42,6 +44,7 @@ Before({ tags: '@schedule' }, async function () {
   talentPage = new jobdetailsPage(page, context);
   jobDescPage = new jobdescription(page, context);
   jobScorePage = new jobscorescriteria(page, context);
+  logout = new logoutPage(page, context);
   utils = new CommonUtils(page, context);
 });
 
@@ -815,4 +818,14 @@ When('I stop the script here for schedule Infinite', async function () {
   console.log('⏸ Script stopped here for debugging. No further steps will run.');
   // Infinite promise -> blocks execution forever
   await new Promise(() => {});
+});
+
+When('searchRoleToLogout', async function () {
+  await logout.searchRoleToLogout();
+  console.log('✓ Searched and clicked role to logout');
+});
+
+When('clickLogout', async function () {
+  await logout.clickLogout();
+  console.log('✓ Clicked logout button');
 });
