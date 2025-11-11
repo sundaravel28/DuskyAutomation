@@ -9,7 +9,8 @@
     "bdd:schedulejob": "cucumber-js tests/features/schedulejob.feature --require-module ts-node/register --require tests/steps/**/*.ts",
     "bdd:addjob-schedulejob": "cucumber-js \"tests/features/AddJob&ScheduleJob.feature\" --require-module ts-node/register --require tests/steps/**/*.ts",
     "pdf:edit": "ts-node tests/pages/pdfeditor.ts",
-    "pdf:create": "ts-node tests/pages/pdfeditor.ts create"
+    "pdf:create": "ts-node tests/pages/pdfeditor.ts create",
+    "login:setup": "ts-node --project ./tsconfig.json ./tests/loginsetup/loginstepup.ts"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +18,12 @@
   "description": "A comprehensive Playwright-based test automation framework for web application testing with a clean, maintainable architecture.",
   "devDependencies": {
     "@cucumber/cucumber": "^12.2.0",
-    "@playwright/test": "^1.55.0",
-    "@types/node": "^24.5.2",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.0",
     "@types/pdf-parse": "^1.1.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "dotenv": "^17.2.3",

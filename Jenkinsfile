@@ -1,36 +1,51 @@
 pipeline {
     agent any
 
+    environment {
+        // Allow Chrome to run in non-headless mode when needed
+        HEADLESS = 'false'
+        PWDEBUG = '1'
+        PLAYWRIGHT_BROWSERS_PATH = '0'
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Checkout Repository') {
             steps {
+                echo 'Cloning repository...'
                 git branch: 'master', url: 'https://github.com/sundaravel28/DuskyAutomation.git'
             }
         }
 
-        stage('Copy All ENV Files') {
+        stage('Copy All .env Files') {
             steps {
+                echo 'Copying all .env files from local system to Jenkins workspace...'
                 bat '''
+                if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
                 echo Copying all .env files...
                 copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.env" "%WORKSPACE%\\" /Y
-                echo Copy completed successfully.
+                echo ✅ Copy completed successfully.
+                dir "%WORKSPACE%\\*.env"
                 '''
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'npm ci'
-                bat 'npx playwright install --with-deps'
+                echo 'Installing Node dependencies and Playwright browsers...'
+                bat '''
+                npm ci
+                npx playwright install --with-deps
+                '''
             }
         }
 
-        // 👇 Add this stage before your normal test runs
         stage('Run Tests Headed (Chrome Profile)') {
             steps {
+                echo 'Running @addnewjob tests in headed mode (Chrome visible)...'
                 bat '''
-                echo Running @addnewjob tests in headed mode using Chrome profile...
+                set HEADLESS=false
                 set PWDEBUG=1
+                echo 🧭 Launching Playwright in headed mode...
                 npx cucumber-js --tags "@addnewjob"
                 '''
             }
@@ -69,14 +84,17 @@ pipeline {
 
     post {
         always {
+            echo 'Archiving HTML & JSON reports...'
             archiveArtifacts artifacts: '**/*.json', allowEmptyArchive: true
             archiveArtifacts artifacts: '**/*.html', allowEmptyArchive: true
         }
+
         success {
-            echo 'All Cucumber tests passed successfully!'
+            echo '✅ All Cucumber tests passed successfully!'
         }
+
         failure {
-            echo 'Some Cucumber tests failed. Check the logs for details.'
+            echo '❌ Some Cucumber tests failed. Check the Jenkins console logs for details.'
         }
     }
 }

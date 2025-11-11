@@ -11,19 +11,24 @@
     "strict": false,
     "outDir": "dist",
     "sourceMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*", "tests/*"]
-    }
+    "baseUrl": "."
   },
   "include": [
     "tests/**/*.ts"
   ],
   "ts-node": {
     "esm": false,
+    "transpileOnly": true,
+    "files": true,
+    "skipIgnore": false,
     "compilerOptions": {
-      "module": "CommonJS"
+      "module": "CommonJS",
+      "moduleResolution": "Node"
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
 

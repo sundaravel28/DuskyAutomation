@@ -1,0 +1,45 @@
+{
+  "cookies": [
+    {
+      "name": "__Host-GAPS",
+      "value": "1:20xUE52P6Jrww11DOSw-eUPD9nNpOw:SV3oNh5sFUYzfy-u",
+      "domain": "accounts.google.com",
+      "path": "/",
+      "expires": 1797427443.448808,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "OTZ",
+      "value": "8342724_34_34__34_",
+      "domain": "accounts.google.com",
+      "path": "/",
+      "expires": 1765459444,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "NID",
+      "value": "526=r5GizbSkp2wkSggQwEgWQrxmSPoIQMkxBT_zQDHJTf6uUA53DRwrOnGnSgPa-8H3LAAD10fzutC0bcWv_bo992XQtekE34iHuejLVI3zK2pQ0esBpZ-HqGLvJBQ3Xe3kOcSEYiAA9g_ThfFP63Sxbsr1uUO9RAHQrO_wK4vytI_I22ZOFPCEBRxSIF_KQYrP",
+      "domain": ".google.com",
+      "path": "/",
+      "expires": 1778678644.353016,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://talent-qa.ideas2it.com",
+      "localStorage": [
+        {
+          "name": "appSettings",
+          "value": "{}"
+        }
+      ]
+    }
+  ]
+}
