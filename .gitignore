@@ -16,6 +16,14 @@ coverage/
 .env.test.local
 .env.production.local
 *.env
+config.env
+validation.env
+jr.env
+jd.env
+.env.*
+!.env.example
+!.env.template
+!.env.sample
 
 # OS generated files
 .DS_Store
