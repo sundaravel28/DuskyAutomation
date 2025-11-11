@@ -88,8 +88,19 @@ export const PDF_EDITOR = {
 // ============================================================================
 
 export const JOB_DETAILS_PAGE = {
-  // Main buttons
+  // Main buttons - Add Job button with fallback selectors
   ADD_JOB_BUTTON: 'button.px-3.bg-primary.h-8.rounded-lg',
+  ADD_JOB_BUTTON_SELECTORS: [
+    'button.px-3.bg-primary.h-8.rounded-lg',
+    'button:has-text("Add Job")',
+    'button:has-text("Add New Job")',
+    'button[class*="bg-primary"][class*="rounded-lg"]',
+    'button[class*="px-3"][class*="bg-primary"]',
+    'button.bg-primary',
+    'button:has-text("Job")',
+    'a:has-text("Add Job")',
+    'button[type="button"]:has-text("Add")',
+  ],
   
   // Input fields
   JOB_TITLE_INPUT: 'input[placeholder="Senior Product Manager"]',

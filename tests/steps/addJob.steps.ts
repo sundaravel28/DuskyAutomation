@@ -164,6 +164,7 @@ When('I open Job Score Criteria and complete selections', async function () {
   await jobScorePage.writeJobResponsibilities();
   await utils.clickAnywhereInUI();
   await jobScorePage.clicksaveandnext();
+  await page.waitForTimeout(10000);
   await jobScorePage.clickPublish();
 });
 

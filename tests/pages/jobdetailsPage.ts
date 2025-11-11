@@ -53,11 +53,35 @@ export default class jobdetailsPage extends BasePage {
   }
 
   /**
-   * Click the "Add Job" button
+   * Click the "Add Job" button with fallback selectors
    */
   async clickAddJobButton() {
-    await this.page.click(JOB_DETAILS_PAGE.ADD_JOB_BUTTON);
-    console.log('✓ Clicked "Add Job" button');
+    try {
+      // Wait for page to be ready
+      await this.page.waitForLoadState('domcontentloaded', { timeout: 10000 });
+      await this.commonUtils.waitForTimeout(1000);
+      
+      // Try clicking with fallback selectors
+      const buttonFound = await this.commonUtils.clickButtonWithFallback(
+        [...JOB_DETAILS_PAGE.ADD_JOB_BUTTON_SELECTORS],
+        'Add Job',
+        (text) => text?.toLowerCase().includes('add') && text?.toLowerCase().includes('job')
+      );
+      
+      if (!buttonFound) {
+        // Last resort: try the original selector with explicit wait
+        console.log('⚠️ Fallback selectors failed, trying original selector...');
+        const button = this.page.locator(JOB_DETAILS_PAGE.ADD_JOB_BUTTON);
+        await button.waitFor({ state: 'visible', timeout: 10000 });
+        await button.click({ timeout: 10000 });
+      }
+      
+      console.log('✓ Clicked "Add Job" button');
+      await this.commonUtils.waitForTimeout(1000);
+    } catch (error) {
+      console.error('❌ Error clicking Add Job button:', error);
+      throw new Error(`Failed to click Add Job button: ${(error as Error).message}`);
+    }
   }
 
   /**
