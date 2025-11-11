@@ -17,37 +17,37 @@ pipeline {
 
         stage('Run @addnewjob Tests') {
             steps {
-                bat 'npx cucumber-js --tags "@addnewjob" --require-module ts-node/register --require tests/steps/**/*.ts'
+                bat 'npx cucumber-js --tags "@addnewjob"'
             }
         }
 
         stage('Run @Addthefeedbackform Tests') {
             steps {
-                bat 'npx cucumber-js --tags "@Addthefeedbackform" --require-module ts-node/register --require tests/steps/**/*.ts'
+                bat 'npx cucumber-js --tags "@Addthefeedbackform"'
             }
         }
 
         stage('Run @OnlineInterviewSchedule Tests') {
             steps {
-                bat 'npx cucumber-js --tags "@OnlineInterviewSchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
+                bat 'npx cucumber-js --tags "@OnlineInterviewSchedule"'
             }
         }
 
         stage('Run @OfflineInterviewSchedule Tests') {
             steps {
-                bat 'npx cucumber-js --tags "@OfflineInterviewSchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
+                bat 'npx cucumber-js --tags "@OfflineInterviewSchedule"'
             }
         }
 
         stage('Run @updateInterviewSchedule Tests') {
             steps {
-                bat 'npx cucumber-js --tags "@updateInterviewSchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
+                bat 'npx cucumber-js --tags "@updateInterviewSchedule"'
             }
         }
 
         stage('Run @disqualifySchedule Tests') {
             steps {
-                bat 'npx cucumber-js --tags "@disqualifySchedule" --require-module ts-node/register --require tests/steps/**/*.ts'
+                bat 'npx cucumber-js --tags "@disqualifySchedule"'
             }
         }
     }
