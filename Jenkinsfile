@@ -7,25 +7,7 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/sundaravel28/DuskyAutomation.git'
             }
         }
-
-       stage('Inject Environment Files') {
-            steps {
-                echo "🔐 Copying .env and related config files from Jenkins credentials..."
-                withCredentials([
-                    file(credentialsId: 'Dusky_config_file', variable: 'ENV_FILE'),
-                    file(credentialsId: 'Dusky_jobdescriptionfile', variable: 'JOB_DESC_FILE'),
-                    file(credentialsId: 'Dusky_jobresponsibilityfiles', variable: 'JOB_RESP_FILE')
-                ]) {
-                    bat '''
-                        echo Copying environment and config files...
-                        copy "%ENV_FILE%" .env
-                        copy "%JOB_DESC_FILE%" .\\data\\jobdescription.json
-                        copy "%JOB_RESP_FILE%" .\\data\\jobresponsibility.json
-                        echo ✅ Environment and config files copied successfully.
-                    '''
-                }
-            }
-        }
+        
          stage('Copy Env File') {
             steps {
                          // Copy the .env file from your local folder to workspace
