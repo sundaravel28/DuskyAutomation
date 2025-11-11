@@ -8,6 +8,13 @@ pipeline {
             }
         }
 
+        stage('Inject Env') {
+            steps {
+                withCredentials([file(credentialsId: 'Dusky_config_file','Dusky_jobdescriptionfile','Dusky_jobresponsibilityfiles', variable: 'ENV_FILE')]) {
+                    bat 'copy "%ENV_FILE%" .env'
+                }
+            }
+        }
          stage('Copy Env File') {
             steps {
                          // Copy the .env file from your local folder to workspace
