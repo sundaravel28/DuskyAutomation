@@ -13,15 +13,6 @@ pipeline {
         PLAYWRIGHT_BROWSERS_PATH = '0'
     }
 
-    triggers {
-        // Schedule build to run every hour (for testing - change to daily later)
-        cron('H * * * *')
-        // Alternative schedules:
-        // cron('H 2 * * *') - Daily at 2:00 AM
-        // cron('H 9 * * 1-5') - Weekdays at 9:00 AM
-        // pollSCM('H/15 * * * *') - Poll SCM every 15 minutes
-    }
-
     stages {
         stage('Checkout Repository') {
             steps {
@@ -94,7 +85,7 @@ pipeline {
             }
         }
 
-        stage('Copy All .pdf Files') {
+        stage('Copy All .pdf Files - After UpdatePDF One') {
             steps {
                 echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
                 bat '''
@@ -122,7 +113,7 @@ pipeline {
             }
         }
 
-        stage('Copy All .pdf Files') {
+        stage('Copy All .pdf Files - After UpdatePDF Two') {
             steps {
                 echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
                 bat '''
@@ -151,7 +142,7 @@ pipeline {
             }
         }
 
-        stage('Copy All .pdf Files') {
+        stage('Copy All .pdf Files - After UpdatePDF Three') {
             steps {
                 echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
                 bat '''
@@ -179,7 +170,7 @@ pipeline {
             }
         }
 
-        stage('Copy All .pdf Files') {
+        stage('Copy All .pdf Files - After UpdatePDF Four') {
             steps {
                 echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
                 bat '''
