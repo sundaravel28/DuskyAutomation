@@ -14,10 +14,12 @@ pipeline {
     }
 
     triggers {
-        // Schedule build to run daily at 2:00 AM
-        cron('H 2 * * *')
-        // Uncomment below to poll SCM every 15 minutes instead
-        // pollSCM('H/15 * * * *')
+        // Schedule build to run every hour (for testing - change to daily later)
+        cron('H * * * *')
+        // Alternative schedules:
+        // cron('H 2 * * *') - Daily at 2:00 AM
+        // cron('H 9 * * 1-5') - Weekdays at 9:00 AM
+        // pollSCM('H/15 * * * *') - Poll SCM every 15 minutes
     }
 
     stages {
