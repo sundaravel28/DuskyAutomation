@@ -86,7 +86,7 @@ pipeline {
             }
         }
 
-        stage('Run @updatepdf Tests') {
+        stage('Run @updatepdf Testsone') {
             steps {
                 bat 'npx cucumber-js --tags "@updatepdf"'
             }
@@ -114,7 +114,7 @@ pipeline {
             }
         }
 
-        stage('Run @updatepdf Tests') {
+        stage('Run @updatepdf Teststwo') {
             steps {
                 bat 'npx cucumber-js --tags "@updatepdf"'
             }
@@ -143,7 +143,7 @@ pipeline {
             }
         }
 
-        stage('Run @updatepdf Tests') {
+        stage('Run @updatepdf Teststhree') {
             steps {
                 bat 'npx cucumber-js --tags "@updatepdf"'
             }
@@ -171,7 +171,7 @@ pipeline {
             }
         }
 
-        stage('Run @updatepdf Tests') {
+        stage('Run @updatepdf Testsfour') {
             steps {
                 bat 'npx cucumber-js --tags "@updatepdf"'
             }
