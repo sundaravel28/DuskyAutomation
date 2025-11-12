@@ -1,3 +1,6 @@
+// Jenkinsfile for Dusky Job and Schedule Flow
+// Repository: https://github.com/sundaravel28/DuskyAutomation.git
+// Branch: master
 pipeline {
     agent any
 
