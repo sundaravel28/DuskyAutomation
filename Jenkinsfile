@@ -11,8 +11,18 @@ pipeline {
     stages {
         stage('Checkout Repository') {
             steps {
-                echo 'Cloning repository...'
-                git branch: 'master', url: 'https://github.com/sundaravel28/DuskyAutomation.git'
+                echo '📦 Cloning repository...'
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/sundaravel28/DuskyAutomation.git'
+                    ]]
+                ])
+                echo '✅ Repository checked out successfully'
             }
         }
 
