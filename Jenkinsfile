@@ -13,6 +13,13 @@ pipeline {
         PLAYWRIGHT_BROWSERS_PATH = '0'
     }
 
+    triggers {
+        // Schedule build to run daily at 2:00 AM
+        cron('H 2 * * *')
+        // Uncomment below to poll SCM every 15 minutes instead
+        // pollSCM('H/15 * * * *')
+    }
+
     stages {
         stage('Checkout Repository') {
             steps {
