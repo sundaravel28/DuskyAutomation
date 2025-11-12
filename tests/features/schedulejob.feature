@@ -47,7 +47,7 @@ Feature: Add one profile in the Jobs
     And scrollToBottom
     And Select Create Event Button
     And Click confirm
-    And I stop the script here for schedule Infinite
+    And I stop the script here for schedule
 
        @OfflineInterviewSchedule
   Scenario: Create Online Interview.
@@ -69,7 +69,7 @@ Feature: Add one profile in the Jobs
     And scrollToBottom
     And Select Create Event Button
     And Click confirm
-    And I stop the script here for schedule Infinite
+    And I stop the script here for schedule
 
 
      @updateInterviewSchedule
@@ -96,7 +96,7 @@ Feature: Add one profile in the Jobs
     And Schedule Interview Button
     And Select Interview Type Online
     And Click update event
-    And I stop the script here for schedule Infinite
+    And I stop the script here for schedule
 
 
      @disqualifySchedule

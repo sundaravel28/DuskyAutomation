@@ -10,7 +10,7 @@ Feature: Add job and complete job description and scoring criteria
     And I add a new job using environment values
     And I open Job Description and write JD content
     And I open Job Score Criteria and complete selections
-    And I stop the script here for schedule
+    #And I stop the script here for schedule
     Then the job creation flow should complete successfully
 
 
