@@ -2,7 +2,9 @@
 // Repository: https://github.com/sundaravel28/DuskyAutomation.git
 // Branch: master
 pipeline {
-    agent any
+    agent {
+    label 'Window Visible Agent'
+    }
 
     environment {
         // Allow Chrome to run in non-headless mode when needed
