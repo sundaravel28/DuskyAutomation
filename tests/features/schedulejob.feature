@@ -14,6 +14,9 @@ Feature: Add one profile in the Jobs
     And Add Feedback Form
     And I stop the script here for schedule
 
+  @updatepdf
+  Scenario: Create a new pdf 
+    When Update PDF
 
   @updatePDFWithResume
   Scenario: Update PDF and Upload Candidate Resume

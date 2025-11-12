@@ -79,11 +79,56 @@ pipeline {
             }
         }
 
+        stage('Run @updatepdf Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@updatepdf"'
+            }
+        }
+
+        stage('Copy All .pdf Files') {
+            steps {
+                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                bat '''
+                if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
+
+                echo Copying all .pdf files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+
+                echo ✅ Copy completed successfully.
+                echo Listing copied files:
+                dir "%WORKSPACE%\\*.pdf"
+                '''
+            }
+        }
+
         stage('Run @OnlineInterviewSchedule Tests') {
             steps {
                 bat 'npx cucumber-js --tags "@OnlineInterviewSchedule"'
             }
         }
+
+        stage('Run @updatepdf Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@updatepdf"'
+            }
+        }
+
+        stage('Copy All .pdf Files') {
+            steps {
+                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                bat '''
+                if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
+
+                echo Copying all .pdf files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+
+                echo ✅ Copy completed successfully.
+                echo Listing copied files:
+                dir "%WORKSPACE%\\*.pdf"
+                '''
+            }
+        }
+
 
         stage('Run @OfflineInterviewSchedule Tests') {
             steps {
@@ -91,9 +136,53 @@ pipeline {
             }
         }
 
+        stage('Run @updatepdf Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@updatepdf"'
+            }
+        }
+
+        stage('Copy All .pdf Files') {
+            steps {
+                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                bat '''
+                if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
+
+                echo Copying all .pdf files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+
+                echo ✅ Copy completed successfully.
+                echo Listing copied files:
+                dir "%WORKSPACE%\\*.pdf"
+                '''
+            }
+        }
+
         stage('Run @updateInterviewSchedule Tests') {
             steps {
                 bat 'npx cucumber-js --tags "@updateInterviewSchedule"'
+            }
+        }
+
+        stage('Run @updatepdf Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@updatepdf"'
+            }
+        }
+
+        stage('Copy All .pdf Files') {
+            steps {
+                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                bat '''
+                if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
+
+                echo Copying all .pdf files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+
+                echo ✅ Copy completed successfully.
+                echo Listing copied files:
+                dir "%WORKSPACE%\\*.pdf"
+                '''
             }
         }
 
