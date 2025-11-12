@@ -30,19 +30,26 @@ pipeline {
                 echo '✅ Repository checked out successfully'
             }
         }
-
-        stage('Copy All .env Files') {
+        
+        stage('Copy All .env and .pdf Files') {
             steps {
-                echo 'Copying all .env files from local system to Jenkins workspace...'
+                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
                 echo Copying all .env files...
                 copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.env" "%WORKSPACE%\\" /Y
+
+                echo Copying all .pdf files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+
                 echo ✅ Copy completed successfully.
+                echo Listing copied files:
                 dir "%WORKSPACE%\\*.env"
+                dir "%WORKSPACE%\\*.pdf"
                 '''
             }
         }
+
 
         stage('Install Dependencies') {
             steps {
