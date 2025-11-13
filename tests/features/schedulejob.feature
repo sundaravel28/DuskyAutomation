@@ -18,10 +18,13 @@ Feature: Add one profile in the Jobs
   Scenario: Create a new pdf 
     When Update PDF
 
+  @deletepdf
+  Scenario: Delete PDF files from workspace folder
+    When Delete PDF files from workspace folder
+
   @updatePDFWithResume
   Scenario: Update PDF and Upload Candidate Resume
     When I navigate to the Talent QA site for schedule
-    And Update PDF
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -49,6 +52,12 @@ Feature: Add one profile in the Jobs
     And scrollToBottom
     And Select Create Event Button
     And Click confirm
+    And Click Back Button
+    And I stop the script here for schedule    
+    And Search candidate by generated name
+    And Click Interviews Side Menu Button
+    And Search candidate in interviews by generated name
+    And Verify generated name in interviews
     And I stop the script here for schedule
 
        @OfflineInterviewSchedule
@@ -70,6 +79,12 @@ Feature: Add one profile in the Jobs
     And scrollToBottom
     And Select Create Event Button
     And Click confirm
+    And Click Back Button
+    And I stop the script here for schedule    
+    And Search candidate by generated name
+    And Click Interviews Side Menu Button
+    And Search candidate in interviews by generated name
+    And Verify generated name in interviews
     And I stop the script here for schedule
 
 
@@ -96,6 +111,12 @@ Feature: Add one profile in the Jobs
     And Schedule Interview Button
     And Select Interview Type Online
     And Click update event
+    And Click Back Button
+    And I stop the script here for schedule
+    And Search candidate by generated name
+    And Click Interviews Side Menu Button
+    And Search candidate in interviews by generated name
+    And Verify generated name in interviews
     And I stop the script here for schedule
 
 
@@ -131,5 +152,10 @@ Feature: Add one profile in the Jobs
     And Select Disqualify Candidate Button
     And I stop the script here for schedule
     And Click confirm disqualify
+    And Click Back Button
+    And I stop the script here for schedule
+    And Search candidate by generated name
+    And Select Disqualify in Kanban Board
+    And Verify candidate name in Disqualified section
     And I stop the script here for schedule
     

@@ -587,5 +587,9 @@ export const SCHEDULE_INTERVIEW_PAGE = {
   SELEECTTEMPLATEBUTTON:"//*[text()='Select Template']",
   SELECTTEMPLATETYPE:"//*[text()='Select Template']",
   SELECTDISQUALIFYBUTTON:"(//*[text()='Disqualify candidate'])[2]",
-  DISQUALIFYCONFIRMBUTTON:"//*[text()='Confirm']"
+  DISQUALIFYCONFIRMBUTTON:"//*[text()='Confirm']",
+  CLICKINTERVIEWSIDEMENUBUTTON:"//a[@href='/assigned-candidates']//p[normalize-space(text())='Interviews']",
+  CLICKBACKBUTTON:"//button[text()='Back']",
+  DISQUALIFYCANDIDATEBUTTONINKANBANBOARD:"//*[text()='Disqualified']",
+  SEARCHCANDIDATEININTERVIEWS:"//input[@id='searchCandidates']"
 } as const;

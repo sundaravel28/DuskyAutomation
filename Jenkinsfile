@@ -191,6 +191,12 @@ pipeline {
                 bat 'npx cucumber-js --tags "@disqualifySchedule"'
             }
         }
+
+        stage('Run @deletepdf Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@deletepdf"'
+            }
+        }
     }
 
     post {

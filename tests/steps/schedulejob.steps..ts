@@ -279,7 +279,7 @@ When('Search candidate by generated name', async function () {
   try {
     const pipeSel = (SCHEDULE_INTERVIEW_PAGE as any).CLICKPIPELINE;
     if (pipeSel) {
-      const pipelineTab = this.page.locator(`xpath=${pipeSel}`).first();
+      const pipelineTab = page.locator(`xpath=${pipeSel}`).first();
       if (await pipelineTab.isVisible().catch(() => false)) {
         await pipelineTab.click();
         await utils.waitForTimeout(1000);
@@ -297,7 +297,7 @@ When('Search candidate by generated name', async function () {
   const searchInput = await utils.findElementWithFallback(searchCandidates, 5000);
   if (!searchInput) {
     // If no input, try to highlight row directly
-    const row = this.page.locator(`text=${candidateName}`).first();
+    const row = page.locator(`text=${candidateName}`).first();
     await row.waitFor({ state: 'visible', timeout: 10000 });
     console.log(`✓ Found candidate row for ${candidateName}`);
     return;
@@ -308,7 +308,7 @@ When('Search candidate by generated name', async function () {
   await utils.waitForTimeout(1500);
 
   // Verify presence
-  const result = this.page.locator(`text=${candidateName}`).first();
+  const result = page.locator(`text=${candidateName}`).first();
   await result.waitFor({ state: 'visible', timeout: 10000 });
   console.log(`✓ Candidate visible in results: ${candidateName}`);
 });
@@ -338,7 +338,7 @@ When('Click candidate by generated name', async function () {
   console.log(`✓ Clicked candidate: ${candidateName}`);
 });
 
-// Combined step: search and click the candidate in one go
+
 When('Search and open candidate by generated name', async function () {
   const nameFile = path.resolve(process.cwd(), 'generated_name.txt');
   if (!fs.existsSync(nameFile)) {
@@ -389,7 +389,6 @@ When('Search and open candidate by generated name', async function () {
   await utils.clickElementWithFallback(element, `candidate ${candidateName}`);
   console.log(`✓ Opened candidate: ${candidateName}`);
 });
-
 
 When('click Browse File', async function () {
   await utils.uploadFileViaPicker(`xpath=${(SCHEDULE_INTERVIEW_PAGE as any).SELECT_BROWSE_FILE}`);
@@ -711,6 +710,120 @@ When('Select disqualify reason from config', async function () {
   }
 });
 
+When('Click Interviews Side Menu Button', async function () {
+  const clickinterviewsidemenubutton = (SCHEDULE_INTERVIEW_PAGE.CLICKINTERVIEWSIDEMENUBUTTON);
+  const btn = page.locator(`xpath=${clickinterviewsidemenubutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Interviews Side Menu Button');
+});
+
+When('Click Back Button', async function () {
+  const clickbackbutton = (SCHEDULE_INTERVIEW_PAGE.CLICKBACKBUTTON);
+  const btn = page.locator(`xpath=${clickbackbutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Back Button');
+});
+
+When('Select Disqualify Candidate Button', async function () {
+  const selectdisqualifycandidatebutton = (SCHEDULE_INTERVIEW_PAGE.SELECTDISQUALIFYBUTTON);
+  const btn = page.locator(`xpath=${selectdisqualifycandidatebutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Disqualify Candidate Button');
+});
+
+When('Search candidate in interviews by generated name', async function () {
+  // Read candidate name from generated_name.txt
+  const nameFile = path.resolve(process.cwd(), 'generated_name.txt');
+  if (!fs.existsSync(nameFile)) {
+    throw new Error('generated_name.txt not found. Run the PDF update step first.');
+  }
+  const candidateName = fs.readFileSync(nameFile, 'utf8').trim();
+  if (!candidateName) {
+    throw new Error('generated_name.txt is empty');
+  }
+
+  // Extract only the first name (split by space and take first part, trim spaces)
+  const firstName = candidateName.split(' ')[0].trim();
+  if (!firstName) {
+    throw new Error('Could not extract first name from candidate name');
+  }
+
+  const searchcandidateininterviews = (SCHEDULE_INTERVIEW_PAGE.SEARCHCANDIDATEININTERVIEWS);
+  const input = page.locator(`xpath=${searchcandidateininterviews}`);
+  await input.waitFor({ state: 'visible', timeout: 20000 });
+  await input.fill('');
+  await input.type(firstName);
+  await utils.waitForTimeout(1000);
+  console.log(`✓ Searched candidate in interviews (first name only): ${firstName}`);
+});
+
+When('Verify generated name in interviews', async function () {
+  // Read candidate name from generated_name.txt
+  const nameFile = path.resolve(process.cwd(), 'generated_name.txt');
+  if (!fs.existsSync(nameFile)) {
+    throw new Error('generated_name.txt not found. Run the PDF update step first.');
+  }
+  const candidateName = fs.readFileSync(nameFile, 'utf8').trim();
+  if (!candidateName) {
+    throw new Error('generated_name.txt is empty');
+  }
+
+  // Wait for search results to load
+  await utils.waitForTimeout(1000);
+
+  // Find and verify candidate name in interviews
+  const nameElement = page.locator(`text=${candidateName}`).first();
+  await nameElement.waitFor({ state: 'visible', timeout: 10000 });
+  console.log(`✅ Verified candidate name in interviews: ${candidateName}`);
+});
+
+When('Verify candidate name in Disqualified section', async function () {
+  // Read candidate name from generated_name.txt
+  const nameFile = path.resolve(process.cwd(), 'generated_name.txt');
+  if (!fs.existsSync(nameFile)) {
+    throw new Error('generated_name.txt not found. Run the PDF update step first.');
+  }
+  const candidateName = fs.readFileSync(nameFile, 'utf8').trim();
+  if (!candidateName) {
+    throw new Error('generated_name.txt is empty');
+  }
+
+  // Wait for page to load
+  await utils.waitForTimeout(1000);
+
+  // Find the Disqualified section
+  const disqualifiedSection = page.locator(`text=Disqualified`).first();
+  await disqualifiedSection.waitFor({ state: 'visible', timeout: 10000 });
+
+  // Find the candidate name within or below the Disqualified section
+  // Strategy 1: Find name element and verify it's in the Disqualified section
+  const nameElement = page.locator(`text=${candidateName}`).first();
+  await nameElement.waitFor({ state: 'visible', timeout: 10000 });
+
+  // Verify the name is in the Disqualified section by checking if it's in the same container
+  const disqualifiedContainer = disqualifiedSection.locator('xpath=ancestor::*[contains(@class, "column") or contains(@class, "section") or contains(@class, "board")][1]');
+  const nameInSection = disqualifiedContainer.locator(`text=${candidateName}`).first();
+  
+  try {
+    await nameInSection.waitFor({ state: 'visible', timeout: 5000 });
+    console.log(`✅ Verified candidate name "${candidateName}" is in Disqualified section`);
+  } catch (e) {
+    // Fallback: Check if name appears after Disqualified text in the DOM
+    const bodyText = await page.locator('body').textContent() || '';
+    const disqualifiedIndex = bodyText.indexOf('Disqualified');
+    const nameIndex = bodyText.indexOf(candidateName);
+    
+    if (disqualifiedIndex !== -1 && nameIndex !== -1 && nameIndex > disqualifiedIndex) {
+      console.log(`✅ Verified candidate name "${candidateName}" appears below Disqualified section`);
+    } else {
+      throw new Error(`Candidate name "${candidateName}" not found in Disqualified section`);
+    }
+  }
+});
+
 When('I stop the script here for schedule', async function () {
   console.log('⏸️ Pausing before schedule…');
   await utils.waitForTimeout(10000); // waits 10s
@@ -854,12 +967,12 @@ When('select template type', async function () {
   await utils.waitForTimeout(500);
 });
 
-When('Select Disqualify Candidate Button', async function () {
-  const selectcreateeventbutton = (SCHEDULE_INTERVIEW_PAGE.SELECTDISQUALIFYBUTTON);
+When('Select Disqualify in Kanban Board', async function () {
+  const selectcreateeventbutton = (SCHEDULE_INTERVIEW_PAGE.DISQUALIFYCANDIDATEBUTTONINKANBANBOARD);
   const btn = page.locator(`xpath=${selectcreateeventbutton}`);
   await btn.waitFor({ state: 'visible', timeout: 20000 });
   await btn.click();
-  console.log('✓ Clicked Disqualify Candidate Button');
+  console.log('✓ Clicked Disqualify in Kanban Board');
 });
 
 When('Click confirm disqualify', async function () {
@@ -884,4 +997,44 @@ When('searchRoleToLogout', async function () {
 When('clickLogout', async function () {
   await logout.clickLogout();
   console.log('✓ Clicked logout button');
+});
+
+When('Delete PDF files from workspace folder', async function () {
+  const workspaceDir = path.resolve(process.cwd(), 'workspace', 'Dusky Job and Schedule Flow');
+  
+  // Check if directory exists
+  if (!fs.existsSync(workspaceDir)) {
+    console.log(`⚠️ Workspace directory does not exist: ${workspaceDir}`);
+    return;
+  }
+
+  try {
+    // Read all files in the directory
+    const files = fs.readdirSync(workspaceDir);
+    
+    // Filter only PDF files
+    const pdfFiles = files.filter(file => file.toLowerCase().endsWith('.pdf'));
+    
+    if (pdfFiles.length === 0) {
+      console.log(`📁 No PDF files found in: ${workspaceDir}`);
+      return;
+    }
+
+    // Delete each PDF file
+    let deletedCount = 0;
+    for (const pdfFile of pdfFiles) {
+      const filePath = path.resolve(workspaceDir, pdfFile);
+      try {
+        fs.unlinkSync(filePath);
+        console.log(`🗑️ Deleted: ${pdfFile}`);
+        deletedCount++;
+      } catch (error) {
+        console.warn(`⚠️ Failed to delete ${pdfFile}:`, (error as Error).message);
+      }
+    }
+
+    console.log(`✅ Successfully deleted ${deletedCount} out of ${pdfFiles.length} PDF file(s) from workspace folder`);
+  } catch (error) {
+    throw new Error(`Failed to delete PDF files from workspace folder: ${(error as Error).message}`);
+  }
 });
