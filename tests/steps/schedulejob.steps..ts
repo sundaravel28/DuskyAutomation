@@ -180,6 +180,13 @@ When('click resume upload link', async function () {
 });
 
 When('select source', async function () {
+  // Available source options (excluding "Others" to choose from other options)
+  const sourceOptions = ['Career Page', 'Website', 'LinkedIn', 'Naukri', 'Others'];
+  
+  // Randomly select one source option
+  const randomIndex = Math.floor(Math.random() * sourceOptions.length);
+  const selectedSource = sourceOptions[randomIndex];
+  
   // Get the main selector and candidate selectors
   const sourceSelector = (SCHEDULE_INTERVIEW_PAGE as any).SELECT_SOURCE;
   const candidates = [
@@ -193,10 +200,59 @@ When('select source', async function () {
 
   const tagName = await found.evaluate((el: unknown) => (el as HTMLElement).tagName);
   if (tagName && String(tagName).toUpperCase() === 'SELECT') {
-    await found.selectOption({ label: 'Others' });
-    console.log('✓ Selected "Others" via native <select>');
+    // For native select, get all available options and match by text
+    const availableOptions = await found.evaluate((select: HTMLSelectElement) => {
+      return Array.from(select.options).map(opt => ({
+        text: opt.text.trim(),
+        value: opt.value,
+        index: opt.index
+      }));
+    });
+
+    console.log(`📋 Available source options: ${availableOptions.map(o => o.text).join(', ')}`);
+    
+    // Try to find matching option (case-insensitive, trim whitespace)
+    const matchedOption = availableOptions.find(opt => 
+      opt.text.toLowerCase().trim() === selectedSource.toLowerCase().trim()
+    );
+
+    if (matchedOption) {
+      // Use value if available, otherwise use index
+      if (matchedOption.value) {
+        await found.selectOption({ value: matchedOption.value });
+        console.log(`✓ Selected "${selectedSource}" (value: ${matchedOption.value}) via native <select>`);
+      } else {
+        await found.selectOption({ index: matchedOption.index });
+        console.log(`✓ Selected "${selectedSource}" (index: ${matchedOption.index}) via native <select>`);
+      }
+    } else {
+      // Fallback: try label matching (original method)
+      try {
+        await found.selectOption({ label: selectedSource });
+        console.log(`✓ Selected "${selectedSource}" via native <select> (label match)`);
+      } catch (error) {
+        // If label matching fails, try to match by partial text
+        const partialMatch = availableOptions.find(opt => 
+          opt.text.toLowerCase().includes(selectedSource.toLowerCase()) ||
+          selectedSource.toLowerCase().includes(opt.text.toLowerCase())
+        );
+        
+        if (partialMatch) {
+          if (partialMatch.value) {
+            await found.selectOption({ value: partialMatch.value });
+            console.log(`✓ Selected "${partialMatch.text}" (partial match for "${selectedSource}") via native <select>`);
+          } else {
+            await found.selectOption({ index: partialMatch.index });
+            console.log(`✓ Selected "${partialMatch.text}" (partial match for "${selectedSource}") via native <select>`);
+          }
+        } else {
+          throw new Error(`Could not find option matching "${selectedSource}" in dropdown. Available: ${availableOptions.map(o => o.text).join(', ')}`);
+        }
+      }
+    }
   } else {
-    await utils.selectFromDropdown(candidates, 'Others', 'Source');
+    await utils.selectFromDropdown(candidates, selectedSource, 'Source');
+    console.log(`✓ Selected "${selectedSource}" via dropdown`);
   }
 });
 

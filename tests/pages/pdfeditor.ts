@@ -547,8 +547,17 @@ References: Available upon request`;
     pdfBytes = await pdfDoc.save();
   }
   
-  // Final save with correct filename
-  fs.writeFileSync(dynamicName, pdfBytes);
+  // Final save with correct filename in specified workspace directory
+  const workspaceDir = path.resolve(process.cwd(), 'workspace', 'Dusky Job and Schedule Flow');
+  
+  // Ensure the directory exists
+  if (!fs.existsSync(workspaceDir)) {
+    fs.mkdirSync(workspaceDir, { recursive: true });
+    console.log(`📁 Created directory: ${workspaceDir}`);
+  }
+  
+  const pdfPath = path.resolve(workspaceDir, dynamicName);
+  fs.writeFileSync(pdfPath, pdfBytes);
   
   // Update config.env
   try {
@@ -571,12 +580,12 @@ References: Available upon request`;
     console.warn("⚠️ Could not remove legacy resume_1148.pdf:", e);
   }
   
-  console.log("✅ PDF resume created successfully:", dynamicName);
+  console.log("✅ PDF resume created successfully:", pdfPath);
   console.log("📄 PDF size:", (pdfBytes.length / 1024).toFixed(2), "KB");
   console.log("👉 Resume details:", { name: generatedName, email: generatedEmail, phone: generatedPhone });
   console.log(`resume_Name=${generatedName}`);
   
-  return dynamicName;
+  return pdfPath;
 }
 
 // Allow calling createResumePdf directly from command line

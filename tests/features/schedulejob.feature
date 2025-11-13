@@ -33,7 +33,6 @@ Feature: Add one profile in the Jobs
      @OnlineInterviewSchedule
   Scenario: Create Online Interview.
     When I navigate to the Talent QA site for schedule
-    And Update PDF
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -55,7 +54,6 @@ Feature: Add one profile in the Jobs
        @OfflineInterviewSchedule
   Scenario: Create Online Interview.
     When I navigate to the Talent QA site for schedule
-    And Update PDF
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -78,7 +76,6 @@ Feature: Add one profile in the Jobs
      @updateInterviewSchedule
   Scenario: Create Offline Interview & convert to Online
     When I navigate to the Talent QA site for schedule
-    And Update PDF
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -105,7 +102,6 @@ Feature: Add one profile in the Jobs
      @disqualifySchedule
   Scenario: Create Offline Interview & convert to Online
     When I navigate to the Talent QA site for schedule
-    And Update PDF
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
