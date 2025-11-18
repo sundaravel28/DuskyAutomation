@@ -47,12 +47,28 @@ export class CommonUtils {
     try {
       // Reload latest env values from config.env (PDF editor may have just updated it)
       try { dotenv.config({ path: path.resolve(process.cwd(), 'config.env'), override: true, quiet: true }); } catch (_) {}
-      const uploadDir = process.env.UPLOAD_DIR || process.cwd();
+      let uploadDir = process.env.UPLOAD_DIR || process.cwd();
       const uploadFile = process.env.UPLOAD_FILE || '';
       if (!uploadFile) {
         throw new Error('UPLOAD_FILE not provided in config.env');
       }
-      const absolutePath = path.resolve(uploadDir, uploadFile);
+      
+      // Fix malformed paths like "C:C:\\..." by removing the duplicate "C:"
+      if (uploadDir.match(/^[A-Z]:[A-Z]:/)) {
+        uploadDir = uploadDir.replace(/^([A-Z]:)([A-Z]:)/, '$2');
+      }
+      
+      // If uploadDir is already an absolute path, use it directly; otherwise resolve from cwd
+      let absolutePath: string;
+      if (path.isAbsolute(uploadDir)) {
+        absolutePath = path.join(uploadDir, uploadFile);
+      } else {
+        absolutePath = path.resolve(process.cwd(), uploadDir, uploadFile);
+      }
+      
+      // Normalize the path to handle any double slashes or other issues
+      absolutePath = path.normalize(absolutePath);
+      
       if (!fs.existsSync(absolutePath)) {
         throw new Error(`Upload file not found at ${absolutePath}`);
       }
