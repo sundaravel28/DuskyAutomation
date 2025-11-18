@@ -191,6 +191,64 @@ pipeline {
                 bat 'npx cucumber-js --tags "@disqualifySchedule"'
             }
         }
+		
+		        stage('Run @updatepdf Testsfive') {
+            steps {
+                bat 'npx cucumber-js --tags "@updatepdf"'
+            }
+        }
+
+        stage('Copy All .pdf Files - After UpdatePDF Five') {
+            steps {
+                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                bat '''
+                if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
+
+                echo Copying all .pdf files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+
+                echo ✅ Copy completed successfully.
+                echo Listing copied files:
+                dir "%WORKSPACE%\\*.pdf"
+                '''
+            }
+        }
+
+        stage('Run @noshow Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@noshow"'
+            }
+        }
+
+
+        stage('Run @updatepdf Testssix') {
+            steps {
+                bat 'npx cucumber-js --tags "@updatepdf"'
+            }
+        }
+
+        stage('Copy All .pdf Files - After UpdatePDF six') {
+            steps {
+                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                bat '''
+                if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
+
+                echo Copying all .pdf files...
+                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+
+                echo ✅ Copy completed successfully.
+                echo Listing copied files:
+                dir "%WORKSPACE%\\*.pdf"
+                '''
+            }
+        }
+
+        stage('Run @cancelevent Tests') {
+            steps {
+                bat 'npx cucumber-js --tags "@cancelevent"'
+            }
+        }
+
 
         stage('Run @deletepdf Tests') {
             steps {

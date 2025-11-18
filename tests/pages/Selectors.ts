@@ -594,4 +594,6 @@ export const SCHEDULE_INTERVIEW_PAGE = {
   SEARCHCANDIDATEININTERVIEWS:"//input[@id='searchCandidates']",
   FEEDBACKREASONBUTTON:"//div[text()='Feedback']",
   INTERVIEWDETAILSNEXTPAGEBUTTON:"//button[text()='Save and Continue']",
+  Clicknoshowbutton:"//span[text()='No Show']",
+  JOBSIDEMENUBUTTON:"//*[text()='Jobs']"
 } as const;

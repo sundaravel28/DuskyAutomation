@@ -603,6 +603,22 @@ When('Click Next Page Button in Description Page', async function () {
   console.log('✓ Clicked Next Page Button in Description Page');
 });
 
+When('Click No Show button', async function () {
+  const clicknoshowbutton = (SCHEDULE_INTERVIEW_PAGE.Clicknoshowbutton);
+  const btn = page.locator(`xpath=${clicknoshowbutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked No Show button');
+});
+
+When('Click Jobs', async function () {
+  const clickjobsidemenubutton = (SCHEDULE_INTERVIEW_PAGE.JOBSIDEMENUBUTTON);
+  const btn = page.locator(`xpath=${clickjobsidemenubutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Jobs Side Menu Button');
+});
+
 
 When('Select Create Event Button', async function () {
   const selectcreateeventbutton = (SCHEDULE_INTERVIEW_PAGE.CREATEEVENTBUTTON);

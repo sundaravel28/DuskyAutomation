@@ -41,6 +41,7 @@ Feature: Add one profile in the Jobs
     And click resume upload link
     And select source
     And click Browse File
+    And I stop the script here for schedule
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -70,6 +71,7 @@ Feature: Add one profile in the Jobs
     And click resume upload link
     And select source
     And click Browse File
+    And I stop the script here for schedule
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -100,6 +102,7 @@ Feature: Add one profile in the Jobs
     And click resume upload link
     And select source
     And click Browse File
+    And I stop the script here for schedule
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -128,8 +131,90 @@ Feature: Add one profile in the Jobs
     And I stop the script here for schedule
 
 
+     @noshow
+  Scenario: Create Offline Interview & convert to Online and set candidate as no show
+    When I navigate to the Talent QA site for schedule
+    And Search Role to Schedule Interview
+    And Add Candidate
+    And click resume upload link
+    And select source
+    And click Browse File
+    And I stop the script here for schedule
+    And Search and open candidate by generated name
+    And Schedule Interview Button
+    And Search and select panel member
+    And Click anywhere in UI
+    And Select and fill Current date
+    And Fill From Slot Time
+    And Fill To Slot Time
+    And Select Interview Type Offline
+    And scrollToBottom
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page    
+    And Select Create Event Button
+    And Click confirm
+    And I stop the script here for schedule
+    And Schedule Interview Button
+    And Select Interview Type Online
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page    
+    And Click update event
+    And Click Back Button
+    And I stop the script here for schedule
+    And Search candidate by generated name
+    And Click Interviews Side Menu Button
+    And Search candidate in interviews by generated name
+    And Verify generated name in interviews
+    And Click Jobs
+    And Search Role to Schedule Interview
+    And Search and open candidate by generated name
+    And Select Feedback Reason Button
+    And Click No Show button
+    And Click confirm
+    And I stop the script here for schedule
+
+
+     @cancelevent
+  Scenario: Create Online Interview and cancel the created event.
+    When I navigate to the Talent QA site for schedule
+    And Search Role to Schedule Interview
+    And Add Candidate
+    And click resume upload link
+    And select source
+    And click Browse File
+    And I stop the script here for schedule
+    And Search and open candidate by generated name
+    And Schedule Interview Button
+    And Search and select panel member
+    And Click anywhere in UI
+    And Select and fill Current date
+    And Fill From Slot Time
+    And Fill To Slot Time
+    And Select Interview Type Online
+    And scrollToBottom
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page
+    And Select Create Event Button
+    And Click confirm
+    And Click Back Button
+    And I stop the script here for schedule    
+    And Search candidate by generated name
+    And Click Interviews Side Menu Button
+    And Search candidate in interviews by generated name
+    And Verify generated name in interviews
+    And Click Jobs
+    And Search Role to Schedule Interview
+    And Search and open candidate by generated name
+    And Schedule Interview Button
+    And Click cancel event
+    And Click confirm
+    And Click Back Button
+    And Search candidate by generated name
+    And I stop the script here for schedule
+
+
      @disqualifySchedule
-  Scenario: Create Offline Interview & convert to Online
+  Scenario: Create Offline Interview & Disqualify the Candidate
     When I navigate to the Talent QA site for schedule
     And Search Role to Schedule Interview
     And Add Candidate
