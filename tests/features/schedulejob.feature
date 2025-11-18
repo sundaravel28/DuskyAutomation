@@ -50,6 +50,8 @@ Feature: Add one profile in the Jobs
     And Fill To Slot Time
     And Select Interview Type Online
     And scrollToBottom
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page
     And Select Create Event Button
     And Click confirm
     And Click Back Button
@@ -77,6 +79,8 @@ Feature: Add one profile in the Jobs
     And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page    
     And Select Create Event Button
     And Click confirm
     And Click Back Button
@@ -105,11 +109,15 @@ Feature: Add one profile in the Jobs
     And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page    
     And Select Create Event Button
     And Click confirm
     And I stop the script here for schedule
     And Schedule Interview Button
     And Select Interview Type Online
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page    
     And Click update event
     And Click Back Button
     And I stop the script here for schedule
@@ -137,6 +145,8 @@ Feature: Add one profile in the Jobs
     And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
+    And Click Next Page Button in Interview Details
+    And Click Next Page Button in Description Page    
     And Select Create Event Button
     And Click confirm
     And I stop the script here for schedule
@@ -157,5 +167,8 @@ Feature: Add one profile in the Jobs
     And Search candidate by generated name
     And Select Disqualify in Kanban Board
     And Verify candidate name in Disqualified section
+    And Search and open candidate by generated name
+    And Select Feedback Reason Button
+    And Verify and print disqualification reason
     And I stop the script here for schedule
     

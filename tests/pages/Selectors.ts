@@ -591,5 +591,7 @@ export const SCHEDULE_INTERVIEW_PAGE = {
   CLICKINTERVIEWSIDEMENUBUTTON:"//a[@href='/assigned-candidates']//p[normalize-space(text())='Interviews']",
   CLICKBACKBUTTON:"//button[text()='Back']",
   DISQUALIFYCANDIDATEBUTTONINKANBANBOARD:"//*[text()='Disqualified']",
-  SEARCHCANDIDATEININTERVIEWS:"//input[@id='searchCandidates']"
+  SEARCHCANDIDATEININTERVIEWS:"//input[@id='searchCandidates']",
+  FEEDBACKREASONBUTTON:"//div[text()='Feedback']",
+  INTERVIEWDETAILSNEXTPAGEBUTTON:"//button[text()='Save and Continue']",
 } as const;

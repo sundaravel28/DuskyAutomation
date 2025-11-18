@@ -586,6 +586,24 @@ When('Select Interview Type Offline', async function () {
   console.log('✓ Clicked Interview Type Offline');
 });
 
+When('Click Next Page Button in Interview Details', async function () {
+  const clicknextpagebutton = (SCHEDULE_INTERVIEW_PAGE.INTERVIEWDETAILSNEXTPAGEBUTTON);
+  const btn = page.locator(`xpath=${clicknextpagebutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Next Page Button in Interview Details');
+});
+
+
+When('Click Next Page Button in Description Page', async function () {
+  const clicknextpagebutton = (SCHEDULE_INTERVIEW_PAGE.INTERVIEWDETAILSNEXTPAGEBUTTON);
+  const btn = page.locator(`xpath=${clicknextpagebutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Next Page Button in Description Page');
+});
+
+
 When('Select Create Event Button', async function () {
   const selectcreateeventbutton = (SCHEDULE_INTERVIEW_PAGE.CREATEEVENTBUTTON);
   const btn = page.locator(`xpath=${selectcreateeventbutton}`);
@@ -824,6 +842,87 @@ When('Verify candidate name in Disqualified section', async function () {
   }
 });
 
+When('Verify and print disqualification reason', async function () {
+  // Wait for page to load
+  await utils.waitForTimeout(1000);
+
+  // Find the "Disqualification Reason" heading
+  const reasonHeading = page.locator(`text=Disqualification Reason`).first();
+  await reasonHeading.waitFor({ state: 'visible', timeout: 10000 });
+
+  // Get the disqualification reason text - try multiple strategies
+  let disqualificationReason = '';
+
+  // Strategy 1: Find the paragraph/text element after the heading
+  try {
+    const reasonContainer = reasonHeading.locator('xpath=ancestor::*[contains(@class, "bg-red-50") or contains(@class, "border-red")][1]');
+    const reasonText = reasonContainer.locator('xpath=.//p | .//div[not(contains(text(), "Disqualification Reason"))]').first();
+    await reasonText.waitFor({ state: 'visible', timeout: 3000 });
+    disqualificationReason = await reasonText.textContent() || '';
+    if (disqualificationReason.trim() && !disqualificationReason.includes('Disqualification Reason')) {
+      console.log(`✅ Found disqualification reason: ${disqualificationReason.trim()}`);
+    }
+  } catch (e) {
+    // Continue to next strategy
+  }
+
+  // Strategy 2: Get text from the parent container and extract reason
+  if (!disqualificationReason.trim()) {
+    try {
+      const parentContainer = reasonHeading.locator('xpath=ancestor::*[contains(@class, "bg-red-50") or contains(@class, "border-red") or contains(@class, "rounded")][1]');
+      const containerText = await parentContainer.textContent() || '';
+      // Extract text after "Disqualification Reason"
+      const reasonMatch = containerText.match(/Disqualification Reason\s*([^\n]+)/i);
+      if (reasonMatch && reasonMatch[1]) {
+        disqualificationReason = reasonMatch[1].trim();
+        console.log(`✅ Found disqualification reason : ${disqualificationReason}`);
+      }
+    } catch (e) {
+      // Continue to next strategy
+    }
+  }
+
+  // Strategy 3: Find the next sibling element after the heading
+  if (!disqualificationReason.trim()) {
+    try {
+      const nextElement = reasonHeading.locator('xpath=following-sibling::*[1] | ../following-sibling::*[1]').first();
+      const nextText = await nextElement.textContent() || '';
+      if (nextText.trim() && !nextText.includes('Disqualification Reason')) {
+        disqualificationReason = nextText.trim();
+        console.log(`✅ Found disqualification reason: ${disqualificationReason}`);
+      }
+    } catch (e) {
+      // Continue to next strategy
+    }
+  }
+
+  // Strategy 4: Look for text in red-styled elements near the heading
+  if (!disqualificationReason.trim()) {
+    try {
+      const redTextElements = page.locator('xpath=//*[contains(@class, "text-red-700") or contains(@class, "text-red-800")]');
+      const count = await redTextElements.count();
+      for (let i = 0; i < count; i++) {
+        const element = redTextElements.nth(i);
+        const text = await element.textContent() || '';
+        if (text.trim() && !text.includes('Disqualification Reason') && text.length < 100) {
+          disqualificationReason = text.trim();
+          console.log(`✅ Found disqualification reason: ${disqualificationReason}`);
+          break;
+        }
+      }
+    } catch (e) {
+      // Final fallback
+    }
+  }
+
+  // Print the disqualification reason
+  if (disqualificationReason.trim()) {
+    console.log(`📋 Disqualification Reason: ${disqualificationReason.trim()}`);
+  } else {
+    console.warn(`⚠️ Could not find disqualification reason on the page`);
+  }
+});
+
 When('I stop the script here for schedule', async function () {
   console.log('⏸️ Pausing before schedule…');
   await utils.waitForTimeout(10000); // waits 10s
@@ -843,6 +942,14 @@ When('Select Different Template Button', async function () {
   await btn.waitFor({ state: 'visible', timeout: 20000 });
   await btn.click();
   console.log('✓ Clicked Different Template Button');
+});
+
+When('Select Feedback Reason Button', async function () {
+  const selectfeedbackreasonbutton = (SCHEDULE_INTERVIEW_PAGE.FEEDBACKREASONBUTTON);
+  const btn = page.locator(`xpath=${selectfeedbackreasonbutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Feedback Reason Button');
 });
 
 
