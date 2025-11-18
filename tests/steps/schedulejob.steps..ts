@@ -1123,41 +1123,116 @@ When('clickLogout', async function () {
 });
 
 When('Delete PDF files from workspace folder', async function () {
-  const workspaceDir = path.resolve(process.cwd(), 'workspace', 'Dusky Job and Schedule Flow');
+  // Use the same path resolution logic as pdfeditor.ts to find workspace directory
+  const targetDirName = 'Dusky Job and Schedule Flow';
+  const cwd = process.cwd();
+  let workspaceDir: string;
   
-  // Check if directory exists
-  if (!fs.existsSync(workspaceDir)) {
-    console.log(`⚠️ Workspace directory does not exist: ${workspaceDir}`);
-    return;
+  // Check if current directory is already the target workspace directory
+  if (path.basename(cwd) === targetDirName) {
+    workspaceDir = cwd;
+  } 
+  // Check if current directory contains the target directory as a direct child
+  else if (fs.existsSync(path.join(cwd, targetDirName))) {
+    workspaceDir = path.join(cwd, targetDirName);
   }
-
-  try {
-    // Read all files in the directory
-    const files = fs.readdirSync(workspaceDir);
-    
-    // Filter only PDF files
-    const pdfFiles = files.filter(file => file.toLowerCase().endsWith('.pdf'));
-    
-    if (pdfFiles.length === 0) {
-      console.log(`📁 No PDF files found in: ${workspaceDir}`);
-      return;
-    }
-
-    // Delete each PDF file
-    let deletedCount = 0;
-    for (const pdfFile of pdfFiles) {
-      const filePath = path.resolve(workspaceDir, pdfFile);
-      try {
-        fs.unlinkSync(filePath);
-        console.log(`🗑️ Deleted: ${pdfFile}`);
-        deletedCount++;
-      } catch (error) {
-        console.warn(`⚠️ Failed to delete ${pdfFile}:`, (error as Error).message);
+  // Check if we're inside the target directory (nested)
+  else if (cwd.includes(targetDirName)) {
+    // Find the correct workspace directory by going up to the target directory
+    const parts = cwd.split(path.sep);
+    const targetIndex = parts.findIndex(p => p === targetDirName);
+    if (targetIndex !== -1) {
+      // Use the directory up to and including the target directory
+      workspaceDir = parts.slice(0, targetIndex + 1).join(path.sep);
+    } else {
+      // Fallback: find project root and resolve from there
+      let projectRoot = cwd;
+      let currentDir = cwd;
+      for (let i = 0; i < 10; i++) {
+        const configPath = path.join(currentDir, 'config.env');
+        if (fs.existsSync(configPath)) {
+          projectRoot = currentDir;
+          break;
+        }
+        const parent = path.dirname(currentDir);
+        if (parent === currentDir) break;
+        currentDir = parent;
       }
+      workspaceDir = path.resolve(projectRoot, 'workspace', targetDirName);
+    }
+  }
+  // Not in workspace, find project root and resolve from there
+  else {
+    let projectRoot = cwd;
+    let currentDir = cwd;
+    for (let i = 0; i < 10; i++) {
+      const configPath = path.join(currentDir, 'config.env');
+      if (fs.existsSync(configPath)) {
+        projectRoot = currentDir;
+        break;
+      }
+      const parent = path.dirname(currentDir);
+      if (parent === currentDir) break;
+      currentDir = parent;
+    }
+    workspaceDir = path.resolve(projectRoot, 'workspace', targetDirName);
+  }
+
+  // Define both paths: primary and nested
+  const primaryWorkspaceDir = workspaceDir;
+  const nestedWorkspaceDir = path.resolve(workspaceDir, 'workspace', targetDirName);
+  
+  let totalDeletedCount = 0;
+
+  // Helper function to delete PDFs from a directory
+  const deletePdfsFromDirectory = (dirPath: string, locationName: string): number => {
+    if (!fs.existsSync(dirPath)) {
+      console.log(`⚠️ ${locationName} directory does not exist: ${dirPath}`);
+      return 0;
     }
 
-    console.log(`✅ Successfully deleted ${deletedCount} out of ${pdfFiles.length} PDF file(s) from workspace folder`);
-  } catch (error) {
-    throw new Error(`Failed to delete PDF files from workspace folder: ${(error as Error).message}`);
-  }
+    try {
+      // Read all files in the directory
+      const files = fs.readdirSync(dirPath);
+      
+      // Filter only PDF files
+      const pdfFiles = files.filter(file => file.toLowerCase().endsWith('.pdf'));
+      
+      if (pdfFiles.length === 0) {
+        console.log(`📁 No PDF files found in ${locationName}: ${dirPath}`);
+        return 0;
+      }
+
+      // Delete each PDF file
+      let deletedCount = 0;
+      for (const pdfFile of pdfFiles) {
+        const filePath = path.resolve(dirPath, pdfFile);
+        try {
+          fs.unlinkSync(filePath);
+          console.log(`🗑️ Deleted from ${locationName}: ${pdfFile}`);
+          deletedCount++;
+        } catch (error) {
+          console.warn(`⚠️ Failed to delete ${pdfFile} from ${locationName}:`, (error as Error).message);
+        }
+      }
+
+      console.log(`✅ Successfully deleted ${deletedCount} out of ${pdfFiles.length} PDF file(s) from ${locationName}`);
+      return deletedCount;
+    } catch (error) {
+      console.warn(`⚠️ Error processing ${locationName}:`, (error as Error).message);
+      return 0;
+    }
+  };
+
+  // Delete PDFs from primary workspace directory
+  console.log(`\n📂 Deleting PDFs from primary location: ${primaryWorkspaceDir}`);
+  const primaryDeleted = deletePdfsFromDirectory(primaryWorkspaceDir, 'primary location');
+  totalDeletedCount += primaryDeleted;
+
+  // Delete PDFs from nested workspace directory
+  console.log(`\n📂 Deleting PDFs from nested location: ${nestedWorkspaceDir}`);
+  const nestedDeleted = deletePdfsFromDirectory(nestedWorkspaceDir, 'nested location');
+  totalDeletedCount += nestedDeleted;
+
+  console.log(`\n✅ Total: Successfully deleted ${totalDeletedCount} PDF file(s) from both locations`);
 });

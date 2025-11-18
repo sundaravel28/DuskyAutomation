@@ -609,8 +609,20 @@ References: Available upon request`;
     console.log(`📁 Created directory: ${workspaceDir}`);
   }
   
+  // Save PDF to primary workspace directory
   const pdfPath = path.resolve(workspaceDir, dynamicName);
   fs.writeFileSync(pdfPath, pdfBytes);
+  console.log(`✅ PDF saved to primary location: ${pdfPath}`);
+  
+  // Also save PDF to nested workspace directory (for Jenkins compatibility)
+  const nestedWorkspaceDir = path.resolve(workspaceDir, 'workspace', targetDirName);
+  if (!fs.existsSync(nestedWorkspaceDir)) {
+    fs.mkdirSync(nestedWorkspaceDir, { recursive: true });
+    console.log(`📁 Created nested directory: ${nestedWorkspaceDir}`);
+  }
+  const nestedPdfPath = path.resolve(nestedWorkspaceDir, dynamicName);
+  fs.writeFileSync(nestedPdfPath, pdfBytes);
+  console.log(`✅ PDF saved to nested location: ${nestedPdfPath}`);
   
   // Update config.env
   try {
@@ -633,7 +645,9 @@ References: Available upon request`;
     console.warn("⚠️ Could not remove legacy resume_1148.pdf:", e);
   }
   
-  console.log("✅ PDF resume created successfully:", pdfPath);
+  console.log("✅ PDF resume created successfully");
+  console.log("📄 Primary location:", pdfPath);
+  console.log("📄 Nested location:", nestedPdfPath);
   console.log("📄 PDF size:", (pdfBytes.length / 1024).toFixed(2), "KB");
   console.log("👉 Resume details:", { name: generatedName, email: generatedEmail, phone: generatedPhone });
   console.log(`resume_Name=${generatedName}`);
