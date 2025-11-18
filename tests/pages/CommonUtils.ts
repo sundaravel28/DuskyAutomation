@@ -106,7 +106,13 @@ export class CommonUtils {
     const lastNames = ["Sathish", "Johny", "Will", "Blake", "Jone", "Miler","Kumari","Ravi"];
     const first = firstNames[Math.floor(Math.random() * firstNames.length)];
     const last = lastNames[Math.floor(Math.random() * lastNames.length)];
-    return `${first} ${last}`;
+    
+    // Add one random alphabet (a-z) to first name and last name
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const randomLetter1 = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    const randomLetter2 = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    
+    return `${first}${randomLetter1} ${last}${randomLetter2}`;
   }
 
   static generateRandomEmail(fullName: string): string {
