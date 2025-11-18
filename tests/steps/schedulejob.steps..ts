@@ -256,6 +256,42 @@ When('select source', async function () {
   }
 });
 
+When('Click Add Hiring Stage Button', async function () {
+  const AddhiringstageSelector = (SCHEDULE_INTERVIEW_PAGE as any).ADDHIRINGSTAGEBUTTON;
+  const btn = page.locator(`xpath=${AddhiringstageSelector}`);
+  await btn.waitFor({ state: 'visible', timeout: 10000 });
+  await btn.click();
+  console.log('✓ Clicked Add Hiring Stage Button');
+  await page.getByPlaceholder('Enter the stage name').fill('Level 1');
+  await page.getByPlaceholder('Enter the stage name').press('Tab');
+  console.log('✓ Added Hiring Stage');
+});
+
+When('Click Screening Button in Add Hiring Stage', async function () {
+  const ScreeningbuttonSelector = (SCHEDULE_INTERVIEW_PAGE as any).ADDHIRINGSTAGETYPEBUTTON;
+  const btn = page.locator(`xpath=${ScreeningbuttonSelector}`);
+  await btn.waitFor({ state: 'visible', timeout: 10000 });
+  await btn.click();
+  console.log('✓ Clicked Screening Button');
+});
+
+When('Click HR Screening Button in Add Hiring Stage Name', async function () {
+  const HRScreeningbuttonSelector = (SCHEDULE_INTERVIEW_PAGE as any).ADDHIRINGSTAGENAMEBUTTON;
+  const btn = page.locator(`xpath=${HRScreeningbuttonSelector}`);
+  await btn.waitFor({ state: 'visible', timeout: 10000 });
+  await btn.click();
+  console.log('✓ Clicked HR Screening Button');
+});
+
+When('Click Create Stage Button', async function () {
+  const CreateStagebuttonSelector = (SCHEDULE_INTERVIEW_PAGE as any).CREATESTAGEBUTTON;
+  const btn = page.locator(`xpath=${CreateStagebuttonSelector}`);
+  await btn.waitFor({ state: 'visible', timeout: 10000 });
+  await btn.click();
+  console.log('✓ Clicked Create Stage Button');
+});
+
+
 When('Add Feedback Form', async function () {
   const AddfeedbackSelector = (SCHEDULE_INTERVIEW_PAGE as any).ADDFEEDBACK;
   const btn = page.locator(`xpath=${AddfeedbackSelector}`);

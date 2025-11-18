@@ -10,6 +10,10 @@ Feature: Add one profile in the Jobs
     And Search Role to Schedule Interview
     And Click Settings
     And Click Hiring Stages
+    And Click Add Hiring Stage Button
+    And Click Screening Button in Add Hiring Stage
+    And Click HR Screening Button in Add Hiring Stage Name
+    And Click Create Stage Button
     And Open Feedback form
     And Add Feedback Form
     And I stop the script here for schedule
@@ -55,6 +59,7 @@ Feature: Add one profile in the Jobs
     And Click Next Page Button in Description Page
     And Select Create Event Button
     And Click confirm
+    And I stop the script here for schedule
     And Click Back Button
     And I stop the script here for schedule    
     And Search candidate by generated name

@@ -547,6 +547,10 @@ export const SCHEDULE_INTERVIEW_PAGE = {
     "role=link[name=Hiring Stages]",
     "button:has-text('Hiring Stages')"
   ],
+  ADDHIRINGSTAGEBUTTON:"//button[text()='Add a new hiring stage']",
+  ADDHIRINGSTAGETYPEBUTTON:"//button[text()='Screening']",
+  ADDHIRINGSTAGENAMEBUTTON:"//button[text()='HR Screening']",
+  CREATESTAGEBUTTON:"(//button[@title='Create Stage'])",
   // Feedback form trigger button (compact utility-classes badge)
   FEEDBACK_FORM_BUTTON_STRICT: "(//button[@title='Select a form' and contains(text(),'Add Feedback Form')])[1]",
   FEEDBACK_FORM_BUTTON_CANDIDATES: [
