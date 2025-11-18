@@ -548,7 +548,28 @@ References: Available upon request`;
   }
   
   // Final save with correct filename in specified workspace directory
-  const workspaceDir = path.resolve(process.cwd(), 'workspace', 'Dusky Job and Schedule Flow');
+  // Find project root by looking for config.env, then resolve workspace path from there
+  let projectRoot = process.cwd();
+  const targetDirName = 'Dusky Job and Schedule Flow';
+  
+  // Try to find project root by looking for config.env
+  let currentDir = projectRoot;
+  let foundRoot = false;
+  for (let i = 0; i < 10; i++) { // Limit search depth
+    const configPath = path.join(currentDir, 'config.env');
+    if (fs.existsSync(configPath)) {
+      projectRoot = currentDir;
+      foundRoot = true;
+      break;
+    }
+    const parent = path.dirname(currentDir);
+    if (parent === currentDir) break; // Reached filesystem root
+    currentDir = parent;
+  }
+  
+  // Resolve workspace directory from project root
+  // Always use: projectRoot/workspace/Dusky Job and Schedule Flow
+  const workspaceDir = path.resolve(projectRoot, 'workspace', targetDirName);
   
   // Ensure the directory exists
   if (!fs.existsSync(workspaceDir)) {
