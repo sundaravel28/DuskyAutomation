@@ -548,28 +548,60 @@ References: Available upon request`;
   }
   
   // Final save with correct filename in specified workspace directory
-  // Find project root by looking for config.env, then resolve workspace path from there
-  let projectRoot = process.cwd();
+  // Handle both local and Jenkins environments
   const targetDirName = 'Dusky Job and Schedule Flow';
+  const cwd = process.cwd();
+  let workspaceDir: string;
   
-  // Try to find project root by looking for config.env
-  let currentDir = projectRoot;
-  let foundRoot = false;
-  for (let i = 0; i < 10; i++) { // Limit search depth
-    const configPath = path.join(currentDir, 'config.env');
-    if (fs.existsSync(configPath)) {
-      projectRoot = currentDir;
-      foundRoot = true;
-      break;
-    }
-    const parent = path.dirname(currentDir);
-    if (parent === currentDir) break; // Reached filesystem root
-    currentDir = parent;
+  // Check if current directory is already the target workspace directory
+  if (path.basename(cwd) === targetDirName) {
+    workspaceDir = cwd;
+  } 
+  // Check if current directory contains the target directory as a direct child
+  else if (fs.existsSync(path.join(cwd, targetDirName))) {
+    workspaceDir = path.join(cwd, targetDirName);
   }
-  
-  // Resolve workspace directory from project root
-  // Always use: projectRoot/workspace/Dusky Job and Schedule Flow
-  const workspaceDir = path.resolve(projectRoot, 'workspace', targetDirName);
+  // Check if we're inside the target directory (nested)
+  else if (cwd.includes(targetDirName)) {
+    // Find the correct workspace directory by going up to the target directory
+    const parts = cwd.split(path.sep);
+    const targetIndex = parts.findIndex(p => p === targetDirName);
+    if (targetIndex !== -1) {
+      // Use the directory up to and including the target directory
+      workspaceDir = parts.slice(0, targetIndex + 1).join(path.sep);
+    } else {
+      // Fallback: find project root and resolve from there
+      let projectRoot = cwd;
+      let currentDir = cwd;
+      for (let i = 0; i < 10; i++) {
+        const configPath = path.join(currentDir, 'config.env');
+        if (fs.existsSync(configPath)) {
+          projectRoot = currentDir;
+          break;
+        }
+        const parent = path.dirname(currentDir);
+        if (parent === currentDir) break;
+        currentDir = parent;
+      }
+      workspaceDir = path.resolve(projectRoot, 'workspace', targetDirName);
+    }
+  }
+  // Not in workspace, find project root and resolve from there
+  else {
+    let projectRoot = cwd;
+    let currentDir = cwd;
+    for (let i = 0; i < 10; i++) {
+      const configPath = path.join(currentDir, 'config.env');
+      if (fs.existsSync(configPath)) {
+        projectRoot = currentDir;
+        break;
+      }
+      const parent = path.dirname(currentDir);
+      if (parent === currentDir) break;
+      currentDir = parent;
+    }
+    workspaceDir = path.resolve(projectRoot, 'workspace', targetDirName);
+  }
   
   // Ensure the directory exists
   if (!fs.existsSync(workspaceDir)) {
