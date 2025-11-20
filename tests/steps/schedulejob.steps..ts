@@ -82,6 +82,14 @@ When('Search Role to Schedule Interview', async function () {
   console.log('✓ Clicked job title heading via selector: SELECT_ROLE_FOR_INTERVIEW');
 });
 
+
+When('Click Search Icon', async function () {
+  const searchIcon = page.locator(`xpath=${SCHEDULE_INTERVIEW_PAGE.CLICKSEARCHICON}`).first();
+  await searchIcon.waitFor({ state: 'visible', timeout: 10000 });
+  await searchIcon.click();
+  console.log('✓ Clicked Search Icon');
+});
+
 When('Select pipeline Button', async function () {
   const selectcreateeventbutton = (SCHEDULE_INTERVIEW_PAGE.CLICKPIPELINE);
   const btn = page.locator(`xpath=${selectcreateeventbutton}`);

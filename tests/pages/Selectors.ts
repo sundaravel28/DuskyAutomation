@@ -566,6 +566,7 @@ export const SCHEDULE_INTERVIEW_PAGE = {
     "[class*='ml-auto'][class*='font-medium'][class*='h-5'][class*='bg-gray-100']",
     "[class*='rounded-sm'][class*='gap-1']"
   ],
+  CLICKSEARCHICON:"//*[@d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z']",
   ADDFEEDBACK: "(//button[contains(@class, 'form-action-icon') and normalize-space(text())='Select Form'])[1]",
   CLICKPIPELINE: "//*[text()='Pipeline']",
   SCHEDULEINTERVIEWBUTTON:"//button[contains(text(), 'Schedule interview')]",

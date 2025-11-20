@@ -34,6 +34,7 @@ Feature: Add one profile in the Jobs
     And click resume upload link
     And select source
     And click Browse File
+    And Click Search Icon
     And Search and open candidate by generated name
 
 
@@ -46,6 +47,7 @@ Feature: Add one profile in the Jobs
     And select source
     And click Browse File
     And I stop the script here for schedule
+    And Click Search Icon
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -61,7 +63,8 @@ Feature: Add one profile in the Jobs
     And Click confirm
     And I stop the script here for schedule
     And Click Back Button
-    And I stop the script here for schedule    
+    And I stop the script here for schedule
+    And Click Search Icon    
     And Search candidate by generated name
     And Click Interviews Side Menu Button
     And Search candidate in interviews by generated name
@@ -77,6 +80,7 @@ Feature: Add one profile in the Jobs
     And select source
     And click Browse File
     And I stop the script here for schedule
+    And Click Search Icon
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -91,7 +95,8 @@ Feature: Add one profile in the Jobs
     And Select Create Event Button
     And Click confirm
     And Click Back Button
-    And I stop the script here for schedule    
+    And I stop the script here for schedule
+    And Click Search Icon    
     And Search candidate by generated name
     And Click Interviews Side Menu Button
     And Search candidate in interviews by generated name
@@ -108,6 +113,7 @@ Feature: Add one profile in the Jobs
     And select source
     And click Browse File
     And I stop the script here for schedule
+    And Click Search Icon
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -129,6 +135,7 @@ Feature: Add one profile in the Jobs
     And Click update event
     And Click Back Button
     And I stop the script here for schedule
+    And Click Search Icon
     And Search candidate by generated name
     And Click Interviews Side Menu Button
     And Search candidate in interviews by generated name
@@ -145,6 +152,7 @@ Feature: Add one profile in the Jobs
     And select source
     And click Browse File
     And I stop the script here for schedule
+    And Click Search Icon
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -166,16 +174,17 @@ Feature: Add one profile in the Jobs
     And Click update event
     And Click Back Button
     And I stop the script here for schedule
+    And Click Search Icon
     And Search candidate by generated name
     And Click Interviews Side Menu Button
     And Search candidate in interviews by generated name
     And Verify generated name in interviews
     And Click Jobs
     And Search Role to Schedule Interview
+    And Click Search Icon
     And Search and open candidate by generated name
     And Select Feedback Reason Button
     And Click No Show button
-    And Click confirm
     And I stop the script here for schedule
 
 
@@ -188,6 +197,7 @@ Feature: Add one profile in the Jobs
     And select source
     And click Browse File
     And I stop the script here for schedule
+    And Click Search Icon
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -202,18 +212,21 @@ Feature: Add one profile in the Jobs
     And Select Create Event Button
     And Click confirm
     And Click Back Button
-    And I stop the script here for schedule    
+    And I stop the script here for schedule
+    And Click Search Icon    
     And Search candidate by generated name
     And Click Interviews Side Menu Button
     And Search candidate in interviews by generated name
     And Verify generated name in interviews
     And Click Jobs
     And Search Role to Schedule Interview
+    And Click Search Icon
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Click cancel event
     And Click confirm
     And Click Back Button
+    And Click Search Icon
     And Search candidate by generated name
     And I stop the script here for schedule
 
@@ -226,6 +239,8 @@ Feature: Add one profile in the Jobs
     And click resume upload link
     And select source
     And click Browse File
+    And I stop the script here for schedule
+    And Click Search Icon
     And Search and open candidate by generated name
     And Schedule Interview Button
     And Search and select panel member
@@ -254,8 +269,9 @@ Feature: Add one profile in the Jobs
     And Click confirm disqualify
     And Click Back Button
     And I stop the script here for schedule
-    And Search candidate by generated name
     And Select Disqualify in Kanban Board
+    And Click Search Icon
+    And Search candidate by generated name
     And Verify candidate name in Disqualified section
     And Search and open candidate by generated name
     And Select Feedback Reason Button
