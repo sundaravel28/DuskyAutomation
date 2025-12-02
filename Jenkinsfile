@@ -20,7 +20,7 @@ pipeline {
     stages {
         stage('Pipeline Start') {
             steps {
-                echo '🚀 Pipeline started successfully'
+                echo 'Pipeline started successfully'
                 echo "Agent: ${env.NODE_NAME}"
                 echo "Workspace: ${env.WORKSPACE}"
             }
@@ -28,7 +28,7 @@ pipeline {
         
         stage('Checkout Repository') {
             steps {
-                echo '📦 Cloning repository...'
+                echo 'Cloning repository...'
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/master']],
@@ -39,13 +39,13 @@ pipeline {
                         url: 'https://github.com/sundaravel28/DuskyAutomation.git'
                     ]]
                 ])
-                echo '✅ Repository checked out successfully'
+                echo 'Repository checked out successfully'
             }
         }
         
         stage('Copy All .env and .pdf Files') {
             steps {
-                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                echo 'Copying all .env and .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
                 
@@ -71,7 +71,7 @@ pipeline {
                     echo No .pdf files found, skipping...
                 )
 
-                echo ✅ Stage completed. If no files were found, stage passed.
+                echo Stage completed. If no files were found, stage passed.
                 '''
             }
         }
@@ -93,7 +93,7 @@ pipeline {
                 bat '''
                 set HEADLESS=false
                 set PWDEBUG=1
-                echo 🧭 Launching Playwright in headed mode...
+                echo Launching Playwright in headed mode...
                 npx cucumber-js --tags "@addnewjob"
                 '''
             }
@@ -113,7 +113,7 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF One') {
             steps {
-                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
+                echo 'Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
@@ -122,11 +122,11 @@ pipeline {
                 if not errorlevel 1 (
                     echo Copying all .pdf files...
                     copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-                    echo ✅ Copy completed successfully.
+                    echo Copy completed successfully.
                     echo Listing copied files:
                     dir "%WORKSPACE%\\*.pdf"
                 ) else (
-                    echo ℹ️ No .pdf files found. Stage passed.
+                    echo No .pdf files found. Stage passed.
                 )
                 '''
             }
@@ -146,7 +146,7 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Two') {
             steps {
-                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
+                echo 'Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
@@ -155,11 +155,11 @@ pipeline {
                 if not errorlevel 1 (
                     echo Copying all .pdf files...
                     copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-                    echo ✅ Copy completed successfully.
+                    echo Copy completed successfully.
                     echo Listing copied files:
                     dir "%WORKSPACE%\\*.pdf"
                 ) else (
-                    echo ℹ️ No .pdf files found. Stage passed.
+                    echo No .pdf files found. Stage passed.
                 )
                 '''
             }
@@ -180,7 +180,7 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Three') {
             steps {
-                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
+                echo 'Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
@@ -189,11 +189,11 @@ pipeline {
                 if not errorlevel 1 (
                     echo Copying all .pdf files...
                     copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-                    echo ✅ Copy completed successfully.
+                    echo Copy completed successfully.
                     echo Listing copied files:
                     dir "%WORKSPACE%\\*.pdf"
                 ) else (
-                    echo ℹ️ No .pdf files found. Stage passed.
+                    echo No .pdf files found. Stage passed.
                 )
                 '''
             }
@@ -213,7 +213,7 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Four') {
             steps {
-                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
+                echo 'Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
@@ -222,11 +222,11 @@ pipeline {
                 if not errorlevel 1 (
                     echo Copying all .pdf files...
                     copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-                    echo ✅ Copy completed successfully.
+                    echo Copy completed successfully.
                     echo Listing copied files:
                     dir "%WORKSPACE%\\*.pdf"
                 ) else (
-                    echo ℹ️ No .pdf files found. Stage passed.
+                    echo No .pdf files found. Stage passed.
                 )
                 '''
             }
@@ -246,7 +246,7 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Five') {
             steps {
-                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
+                echo 'Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
@@ -255,11 +255,11 @@ pipeline {
                 if not errorlevel 1 (
                     echo Copying all .pdf files...
                     copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-                    echo ✅ Copy completed successfully.
+                    echo Copy completed successfully.
                     echo Listing copied files:
                     dir "%WORKSPACE%\\*.pdf"
                 ) else (
-                    echo ℹ️ No .pdf files found. Stage passed.
+                    echo No .pdf files found. Stage passed.
                 )
                 '''
             }
@@ -280,7 +280,7 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF six') {
             steps {
-                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
+                echo 'Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
@@ -289,11 +289,11 @@ pipeline {
                 if not errorlevel 1 (
                     echo Copying all .pdf files...
                     copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-                    echo ✅ Copy completed successfully.
+                    echo Copy completed successfully.
                     echo Listing copied files:
                     dir "%WORKSPACE%\\*.pdf"
                 ) else (
-                    echo ℹ️ No .pdf files found. Stage passed.
+                    echo No .pdf files found. Stage passed.
                 )
                 '''
             }
@@ -321,11 +321,11 @@ pipeline {
         }
 
         success {
-            echo '✅ All Cucumber tests passed successfully!'
+            echo 'All Cucumber tests passed successfully!'
         }
 
         failure {
-            echo '❌ Some Cucumber tests failed. Check the Jenkins console logs for details.'
+            echo 'Some Cucumber tests failed. Check the Jenkins console logs for details.'
         }
     }
 }
