@@ -1,7 +1,7 @@
 // Jenkinsfile for Dusky Job and Schedule Flow
 pipeline {
     agent {
-        label 'Window Visible Agent'
+        label 'Window-Visible-Agent'
     }
 
     environment {
