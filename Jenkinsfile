@@ -3,7 +3,7 @@
 // Branch: master
 pipeline {
     agent {
-    label 'Window Visible Agent'
+        label 'Window Visible Agent'
     }
 
     environment {
@@ -36,16 +36,30 @@ pipeline {
                 echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
-                echo Copying all .env files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.env" "%WORKSPACE%\\" /Y
+                
+                echo Checking for .env files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.env" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .env files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.env" "%WORKSPACE%\\" /Y
+                    echo Listing copied .env files:
+                    dir "%WORKSPACE%\\*.env" 2>nul
+                ) else (
+                    echo No .env files found, skipping...
+                )
 
-                echo Copying all .pdf files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                echo Checking for .pdf files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .pdf files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                    echo Listing copied .pdf files:
+                    dir "%WORKSPACE%\\*.pdf" 2>nul
+                ) else (
+                    echo No .pdf files found, skipping...
+                )
 
-                echo ✅ Copy completed successfully.
-                echo Listing copied files:
-                dir "%WORKSPACE%\\*.env"
-                dir "%WORKSPACE%\\*.pdf"
+                echo ✅ Stage completed. If no files were found, stage passed.
                 '''
             }
         }
@@ -87,16 +101,21 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF One') {
             steps {
-                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
-                echo Copying all .pdf files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-
-                echo ✅ Copy completed successfully.
-                echo Listing copied files:
-                dir "%WORKSPACE%\\*.pdf"
+                echo Checking for .pdf files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .pdf files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                    echo ✅ Copy completed successfully.
+                    echo Listing copied files:
+                    dir "%WORKSPACE%\\*.pdf"
+                ) else (
+                    echo ℹ️ No .pdf files found. Stage passed.
+                )
                 '''
             }
         }
@@ -115,16 +134,21 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Two') {
             steps {
-                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
-                echo Copying all .pdf files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-
-                echo ✅ Copy completed successfully.
-                echo Listing copied files:
-                dir "%WORKSPACE%\\*.pdf"
+                echo Checking for .pdf files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .pdf files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                    echo ✅ Copy completed successfully.
+                    echo Listing copied files:
+                    dir "%WORKSPACE%\\*.pdf"
+                ) else (
+                    echo ℹ️ No .pdf files found. Stage passed.
+                )
                 '''
             }
         }
@@ -144,16 +168,21 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Three') {
             steps {
-                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
-                echo Copying all .pdf files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-
-                echo ✅ Copy completed successfully.
-                echo Listing copied files:
-                dir "%WORKSPACE%\\*.pdf"
+                echo Checking for .pdf files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .pdf files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                    echo ✅ Copy completed successfully.
+                    echo Listing copied files:
+                    dir "%WORKSPACE%\\*.pdf"
+                ) else (
+                    echo ℹ️ No .pdf files found. Stage passed.
+                )
                 '''
             }
         }
@@ -172,16 +201,21 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Four') {
             steps {
-                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
-                echo Copying all .pdf files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-
-                echo ✅ Copy completed successfully.
-                echo Listing copied files:
-                dir "%WORKSPACE%\\*.pdf"
+                echo Checking for .pdf files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .pdf files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                    echo ✅ Copy completed successfully.
+                    echo Listing copied files:
+                    dir "%WORKSPACE%\\*.pdf"
+                ) else (
+                    echo ℹ️ No .pdf files found. Stage passed.
+                )
                 '''
             }
         }
@@ -191,8 +225,8 @@ pipeline {
                 bat 'npx cucumber-js --tags "@disqualifySchedule"'
             }
         }
-		
-		        stage('Run @updatepdf Testsfive') {
+
+        stage('Run @updatepdf Testsfive') {
             steps {
                 bat 'npx cucumber-js --tags "@updatepdf"'
             }
@@ -200,16 +234,21 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF Five') {
             steps {
-                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
-                echo Copying all .pdf files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-
-                echo ✅ Copy completed successfully.
-                echo Listing copied files:
-                dir "%WORKSPACE%\\*.pdf"
+                echo Checking for .pdf files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .pdf files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                    echo ✅ Copy completed successfully.
+                    echo Listing copied files:
+                    dir "%WORKSPACE%\\*.pdf"
+                ) else (
+                    echo ℹ️ No .pdf files found. Stage passed.
+                )
                 '''
             }
         }
@@ -229,16 +268,21 @@ pipeline {
 
         stage('Copy All .pdf Files - After UpdatePDF six') {
             steps {
-                echo '📁 Copying all .env and .pdf files from local system to Jenkins workspace...'
+                echo '📁 Copying all .pdf files from local system to Jenkins workspace...'
                 bat '''
                 if not exist "%WORKSPACE%" mkdir "%WORKSPACE%"
 
-                echo Copying all .pdf files...
-                copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
-
-                echo ✅ Copy completed successfully.
-                echo Listing copied files:
-                dir "%WORKSPACE%\\*.pdf"
+                echo Checking for .pdf files...
+                dir "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" >nul 2>&1
+                if not errorlevel 1 (
+                    echo Copying all .pdf files...
+                    copy "C:\\Users\\sundaravel.v\\Documents\\Dusky Automation\\*.pdf" "%WORKSPACE%\\" /Y
+                    echo ✅ Copy completed successfully.
+                    echo Listing copied files:
+                    dir "%WORKSPACE%\\*.pdf"
+                ) else (
+                    echo ℹ️ No .pdf files found. Stage passed.
+                )
                 '''
             }
         }
