@@ -4,6 +4,7 @@ import jobdetailsPage from '../pages/jobdetailsPage';
 import jobdescription from '../pages/jobdescription';
 import jobscorescriteria from '../pages/jobscorescriteria';
 import { CommonUtils } from '../pages/CommonUtils';
+import { SCHEDULE_INTERVIEW_PAGE } from '../pages/Selectors';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -84,6 +85,15 @@ When('I navigate to the Talent QA site', async function () {
   await page.waitForLoadState('domcontentloaded');
   await talentPage.waitForTimeout(3000);
 });
+
+When('Click Job', async function () {
+  const clickjobsidemenubutton = (SCHEDULE_INTERVIEW_PAGE.JOBSIDEMENUBUTTON);
+  const btn = page.locator(`xpath=${clickjobsidemenubutton}`);
+  await btn.waitFor({ state: 'visible', timeout: 20000 });
+  await btn.click();
+  console.log('✓ Clicked Jobs Side Menu Button');
+});
+
 
 When('I stop the script here', async function () {
   console.log('⏸ Script stopped here for debugging. No further steps will run.');

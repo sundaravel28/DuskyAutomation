@@ -6,6 +6,7 @@ Feature: Add job and complete job description and scoring criteria
 
   Scenario: Create a job and finish JD and scoring criteria using env values
     When I navigate to the Talent QA site
+    And Click Job
     #And I stop the script here
     And I add a new job using environment values
     And I open Job Description and write JD content

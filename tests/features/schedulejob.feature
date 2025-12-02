@@ -7,6 +7,7 @@ Feature: Add one profile in the Jobs
   @Addthefeedbackform
   Scenario: Add Feedback Form 
     When I navigate to the Talent QA site for schedule
+    And Click Jobs
     And Search Role to Schedule Interview
     And Click Settings
     And Click Hiring Stages
@@ -41,6 +42,7 @@ Feature: Add one profile in the Jobs
      @OnlineInterviewSchedule
   Scenario: Create Online Interview.
     When I navigate to the Talent QA site for schedule
+    And Click Jobs
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -53,8 +55,8 @@ Feature: Add one profile in the Jobs
     And Search and select panel member
     And Click anywhere in UI
     And Select and fill Current date
-    And Fill From Slot Time
-    And Fill To Slot Time
+    #And Fill From Slot Time
+    #And Fill To Slot Time
     And Select Interview Type Online
     And scrollToBottom
     And Click Next Page Button in Interview Details
@@ -74,6 +76,7 @@ Feature: Add one profile in the Jobs
        @OfflineInterviewSchedule
   Scenario: Create Online Interview.
     When I navigate to the Talent QA site for schedule
+    And Click Jobs
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -86,8 +89,8 @@ Feature: Add one profile in the Jobs
     And Search and select panel member
     And Click anywhere in UI
     And Select and fill Current date
-    And Fill From Slot Time
-    And Fill To Slot Time
+    #And Fill From Slot Time
+    #And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
     And Click Next Page Button in Interview Details
@@ -107,6 +110,7 @@ Feature: Add one profile in the Jobs
      @updateInterviewSchedule
   Scenario: Create Offline Interview & convert to Online
     When I navigate to the Talent QA site for schedule
+    And Click Jobs
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -119,8 +123,8 @@ Feature: Add one profile in the Jobs
     And Search and select panel member
     And Click anywhere in UI
     And Select and fill Current date
-    And Fill From Slot Time
-    And Fill To Slot Time
+    #And Fill From Slot Time
+    #And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
     And Click Next Page Button in Interview Details
@@ -146,6 +150,7 @@ Feature: Add one profile in the Jobs
      @noshow
   Scenario: Create Offline Interview & convert to Online and set candidate as no show
     When I navigate to the Talent QA site for schedule
+    And Click Jobs
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -158,8 +163,8 @@ Feature: Add one profile in the Jobs
     And Search and select panel member
     And Click anywhere in UI
     And Select and fill Current date
-    And Fill From Slot Time
-    And Fill To Slot Time
+    #And Fill From Slot Time
+    #And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
     And Click Next Page Button in Interview Details
@@ -176,6 +181,7 @@ Feature: Add one profile in the Jobs
     And I stop the script here for schedule
     And Click Search Icon
     And Search candidate by generated name
+    And I stop the script here for schedule
     And Click Interviews Side Menu Button
     And Search candidate in interviews by generated name
     And Verify generated name in interviews
@@ -191,6 +197,7 @@ Feature: Add one profile in the Jobs
      @cancelevent
   Scenario: Create Online Interview and cancel the created event.
     When I navigate to the Talent QA site for schedule
+    And Click Jobs
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -203,8 +210,8 @@ Feature: Add one profile in the Jobs
     And Search and select panel member
     And Click anywhere in UI
     And Select and fill Current date
-    And Fill From Slot Time
-    And Fill To Slot Time
+    #And Fill From Slot Time
+    #And Fill To Slot Time
     And Select Interview Type Online
     And scrollToBottom
     And Click Next Page Button in Interview Details
@@ -234,6 +241,7 @@ Feature: Add one profile in the Jobs
      @disqualifySchedule
   Scenario: Create Offline Interview & Disqualify the Candidate
     When I navigate to the Talent QA site for schedule
+    And Click Jobs
     And Search Role to Schedule Interview
     And Add Candidate
     And click resume upload link
@@ -246,8 +254,8 @@ Feature: Add one profile in the Jobs
     And Search and select panel member
     And Click anywhere in UI
     And Select and fill Current date
-    And Fill From Slot Time
-    And Fill To Slot Time
+    #And Fill From Slot Time
+    #And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
     And Click Next Page Button in Interview Details

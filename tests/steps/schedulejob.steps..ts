@@ -189,7 +189,7 @@ When('click resume upload link', async function () {
 
 When('select source', async function () {
   // Available source options (excluding "Others" to choose from other options)
-  const sourceOptions = ['Career Page', 'Website', 'LinkedIn', 'Naukri', 'Others'];
+  const sourceOptions = ['Walk-in', 'LinkedIn', 'Naukri'];
   
   // Randomly select one source option
   const randomIndex = Math.floor(Math.random() * sourceOptions.length);

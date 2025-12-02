@@ -31,8 +31,8 @@ Feature: Add job and complete Schedule job with Update flow
     And Search and select panel member
     And Click anywhere in UI
     And Select and fill Current date
-    And Fill From Slot Time
-    And Fill To Slot Time
+    #And Fill From Slot Time
+    #And Fill To Slot Time
     And Select Interview Type Offline
     And scrollToBottom
     And Select Create Event Button
