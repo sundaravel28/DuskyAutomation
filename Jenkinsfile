@@ -5,6 +5,10 @@ pipeline {
     agent {
         label 'Window Visible Agent'
     }
+    
+    options {
+        timeout(time: 2, unit: 'HOURS')
+    }
 
     environment {
         // Allow Chrome to run in non-headless mode when needed
@@ -14,6 +18,14 @@ pipeline {
     }
 
     stages {
+        stage('Pipeline Start') {
+            steps {
+                echo '🚀 Pipeline started successfully'
+                echo "Agent: ${env.NODE_NAME}"
+                echo "Workspace: ${env.WORKSPACE}"
+            }
+        }
+        
         stage('Checkout Repository') {
             steps {
                 echo '📦 Cloning repository...'
