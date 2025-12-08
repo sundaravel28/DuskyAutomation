@@ -567,6 +567,7 @@ export const SCHEDULE_INTERVIEW_PAGE = {
     "[class*='rounded-sm'][class*='gap-1']"
   ],
   CLICKSEARCHICON:"//*[@d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z']",
+  SEARCH_JOBS: "//*[@id='searchJobs']",   
   ADDFEEDBACK: "(//button[contains(@class, 'form-action-icon') and normalize-space(text())='Select Form'])[1]",
   CLICKPIPELINE: "//*[text()='Pipeline']",
   SCHEDULEINTERVIEWBUTTON:"//button[contains(text(), 'Schedule interview')]",
@@ -593,7 +594,7 @@ export const SCHEDULE_INTERVIEW_PAGE = {
   SELECTTEMPLATETYPE:"//*[text()='Select Template']",
   SELECTDISQUALIFYBUTTON:"(//*[text()='Disqualify candidate'])[2]",
   DISQUALIFYCONFIRMBUTTON:"//*[text()='Confirm']",
-  CLICKINTERVIEWSIDEMENUBUTTON:"//a[@href='/assigned-candidates']//p[normalize-space(text())='Interviews']",
+  CLICKINTERVIEWSIDEMENUBUTTON:"(//*[text()='Interviews'])[1]",
   CLICKBACKBUTTON:"//button[text()='Back']",
   DISQUALIFYCANDIDATEBUTTONINKANBANBOARD:"//*[text()='Disqualified']",
   SEARCHCANDIDATEININTERVIEWS:"//input[@id='searchCandidates']",

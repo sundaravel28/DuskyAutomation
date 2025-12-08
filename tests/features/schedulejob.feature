@@ -267,21 +267,21 @@ Feature: Add one profile in the Jobs
     And Select disqualify reason from config
     And I stop the script here for schedule
     And Select Change Template Button
-    And I stop the script here for schedule
     And select template type
-    And I stop the script here for schedule
+    #And I stop the script here for schedule
     And Select Template Button
-    And I stop the script here for schedule
+    #And I stop the script here for schedule
     And Select Disqualify Candidate Button
-    And I stop the script here for schedule
+    #And I stop the script here for schedule
     And Click confirm disqualify
     And Click Back Button
-    And I stop the script here for schedule
+    #And I stop the script here for schedule
     And Select Disqualify in Kanban Board
     And Click Search Icon
     And Search candidate by generated name
     And Verify candidate name in Disqualified section
     And Search and open candidate by generated name
+    And I stop the script here for schedule
     And Select Feedback Reason Button
     And Verify and print disqualification reason
     And I stop the script here for schedule

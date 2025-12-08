@@ -76,10 +76,13 @@ Given('Update PDF', async function () {
 
 // Validate job title heading on Schedule Interview page using centralized selector
 When('Search Role to Schedule Interview', async function () {
-  const heading = page.locator(`xpath=${SCHEDULE_INTERVIEW_PAGE.SELECT_ROLE_FOR_INTERVIEW}`).first();
-  await heading.waitFor({ state: 'visible', timeout: 10000 });
-  await heading.click();
-  console.log('✓ Clicked job title heading via selector: SELECT_ROLE_FOR_INTERVIEW');
+  const role = process.env.role || process.env.ROLE;
+  const roleTrimmed = role.trim();
+  await page.waitForLoadState('domcontentloaded');
+  const search = page.locator(`xpath=${SCHEDULE_INTERVIEW_PAGE.SEARCH_JOBS}`).fill(roleTrimmed);
+  console.log(`✓ Searched for role: ${roleTrimmed}`);
+  await page.getByText(roleTrimmed, { exact: false }).first().click();
+  console.log(`✓ Clicked role: ${roleTrimmed}`);
 });
 
 
@@ -406,7 +409,7 @@ When('Search and open candidate by generated name', async function () {
   } catch (_) {}
 
   // Search
-  const searchCandidates = [
+  const searchCandidates = ["(//*[@id='searchCandidates']",
     "input[placeholder*='Search']",
     "input[type='search']",
     "input[aria-label*='Search']",
@@ -848,12 +851,10 @@ When('Verify generated name in interviews', async function () {
   if (!candidateName) {
     throw new Error('generated_name.txt is empty');
   }
-
   // Wait for search results to load
   await utils.waitForTimeout(1000);
-
   // Find and verify candidate name in interviews
-  const nameElement = page.locator(`text=${candidateName}`).first();
+  const nameElement = page.locator(`//*[text()='${candidateName}']`).first();
   await nameElement.waitFor({ state: 'visible', timeout: 10000 });
   console.log(`✅ Verified candidate name in interviews: ${candidateName}`);
 });

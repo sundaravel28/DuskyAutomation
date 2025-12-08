@@ -4,7 +4,6 @@ pipeline {
     label 'windows-visible-agent'
     }
 
-
     environment {
         HEADLESS = 'false'
         PWDEBUG = '1'
