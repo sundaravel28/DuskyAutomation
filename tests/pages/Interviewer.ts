@@ -23,3 +23,8 @@ export default class CLFlowPage extends BasePage {
   }
 }
 
+export const INTERVIEWER_PAGE = {
+  FEEDBACKPENDINGBUTTON:"//*[text()='View Candidates']",
+  PASTINTERVIEWSBUTTON:"//*[text()='Past Interviews']"
+
+}
